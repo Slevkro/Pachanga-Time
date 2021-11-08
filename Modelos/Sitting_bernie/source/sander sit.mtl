@@ -1,0 +1,57 @@
+# Created with Anim8or 1.00
+# Object "object01":
+
+newmtl JACKET
+Ka 0.878 0.878 0.878
+Kd 0.878 0.878 0.878
+Ks 1 1 1
+Ns 752.6
+
+newmtl CHAIR
+Ka 0.18 0.18 0.18
+Kd 0.18 0.18 0.18
+Ks 1 1 1
+Ns 752.6
+
+newmtl PANTS
+Ka 0.282 0.282 0.282
+Kd 0.282 0.282 0.282
+Ks 1 1 1
+Ns 752.6
+
+newmtl SHOES
+Ka 0.941 0.749 0.298
+Kd 0.941 0.749 0.298
+Ks 1 1 1
+Ns 752.6
+
+newmtl GLOVES
+Ka 0.482 0.643 0.89
+Kd 0.482 0.643 0.89
+Ks 1 1 1
+Ns 752.6
+
+newmtl FACEmaterial01
+Ka 0.859 0.706 0.596
+Kd 0.859 0.706 0.596
+Ks 1 1 1
+Ns 752.6
+
+newmtl MASK
+Ka 0.604 0.784 0.71
+Kd 0.604 0.784 0.71
+Ks 1 1 1
+Ns 752.6
+
+newmtl GLASSES
+Ka 0.255 0.255 0.255
+Kd 0.255 0.255 0.255
+Ks 1 1 1
+Ns 752.6
+
+newmtl HAIR
+Ka 0.878 0.878 0.878
+Kd 0.878 0.878 0.878
+Ks 1 1 1
+Ns 752.6
+

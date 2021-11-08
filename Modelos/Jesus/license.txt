@@ -1,0 +1,11 @@
+Model Information:
+* title:	Christus statue color
+* source:	https://sketchfab.com/3d-models/christus-statue-color-ae4a6795ac8a41cd9e3102e45292216f
+* author:	pepetrincado (https://sketchfab.com/pipiripipi)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Christus statue color" (https://sketchfab.com/3d-models/christus-statue-color-ae4a6795ac8a41cd9e3102e45292216f) by pepetrincado (https://sketchfab.com/pipiripipi) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
