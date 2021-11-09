@@ -1,0 +1,26 @@
+# Blender MTL File: 'knuckles.blend'
+# Material Count: 2
+
+newmtl Material.005
+Ns 86.470579
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 0.000000
+illum 1
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\knuckles-body.tga
+map_d E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Modelos\\Knuckels\\source\\Knuckles color.png
+
+newmtl Material.006
+Ns 130.588239
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 0.000000
+illum 9
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\knuckles-eyes.tga
+map_d E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Modelos\\Knuckels\\source\\eyes.png

@@ -1,0 +1,100 @@
+# Blender MTL File: 'bernie.blend'
+# Material Count: 9
+
+newmtl CHAIR
+Ns 752.599996
+Ka 1.000000 1.000000 1.000000
+Kd 0.180000 0.180000 0.180000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\REPO\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\bernie-cloth.tga
+
+newmtl FACEmaterial01
+Ns 752.599996
+Ka 1.000000 1.000000 1.000000
+Kd 0.859000 0.706000 0.596000
+Ks 1.000000 1.000000 1.000000
+Ke 0.756970 0.442784 0.567107
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\REPO\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\bernie-hair.tga
+
+newmtl GLASSES
+Ns 752.599996
+Ka 1.000000 1.000000 1.000000
+Kd 0.255000 0.255000 0.255000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl GLOVES
+Ns 752.599996
+Ka 1.000000 1.000000 1.000000
+Kd 0.482000 0.643000 0.890000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\REPO\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\bernie-buf.tga
+
+newmtl HAIR
+Ns 752.599996
+Ka 1.000000 1.000000 1.000000
+Kd 0.878000 0.878000 0.878000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\REPO\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\bang_face.tga
+
+newmtl JACKET
+Ns 752.599996
+Ka 1.000000 1.000000 1.000000
+Kd 0.878000 0.878000 0.878000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\REPO\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\bernie-black.tga
+
+newmtl MASK
+Ns 752.599996
+Ka 1.000000 1.000000 1.000000
+Kd 0.604000 0.784000 0.710000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\REPO\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\bernie-cubre.tga
+
+newmtl PANTS
+Ns 752.599996
+Ka 1.000000 1.000000 1.000000
+Kd 0.282000 0.282000 0.282000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\REPO\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\bernie-cloth.tga
+
+newmtl SHOES
+Ns 752.599996
+Ka 1.000000 1.000000 1.000000
+Kd 0.941000 0.749000 0.298000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\REPO\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\bernie-shoes.tga

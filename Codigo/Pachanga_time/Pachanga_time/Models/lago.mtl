@@ -1,0 +1,46 @@
+# Blender MTL File: 'lago.blend'
+# Material Count: 4
+
+newmtl Dock_Board_Mat
+Ns 179.999996
+Ka 1.000000 1.000000 1.000000
+Kd 0.500000 0.185004 0.045000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\REPO\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\lago-madera2.tga
+
+newmtl Dock_Leg_Mat
+Ns 179.999996
+Ka 1.000000 1.000000 1.000000
+Kd 0.500000 0.230767 0.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\REPO\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\lago-madera1.tga
+
+newmtl Fishing_Pole_Mat
+Ns 179.999996
+Ka 1.000000 1.000000 1.000000
+Kd 1.000000 0.000000 0.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\REPO\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\lago-caña.tga
+
+newmtl Lake_Water_Mat
+Ns 179.999996
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 1.000000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\REPO\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\lago-agua.tga

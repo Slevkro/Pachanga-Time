@@ -1,0 +1,27 @@
+# Blender MTL File: 'jesus.blend'
+# Material Count: 2
+
+newmtl PM3D_Christus2_2
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Bump E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\REPO\\Pachanga-Time\\Modelos\\Jesus\\textures\\PM3D_Christus2_2_normal.png
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\REPO\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\jesus.tga
+map_Ke E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\REPO\\Pachanga-Time\\Modelos\\Jesus\\textures\\PM3D_Christus2_2_emissive.jpeg
+
+newmtl PM3D_Cube3D1
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Bump E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\REPO\\Pachanga-Time\\Modelos\\Jesus\\textures\\PM3D_Cube3D1_normal.png
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\REPO\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\lago-agua.tga

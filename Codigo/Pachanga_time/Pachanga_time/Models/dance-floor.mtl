@@ -1,0 +1,15 @@
+# Blender MTL File: 'dance-floor.blend'
+# Material Count: 1
+
+newmtl Material_#44
+Ns 18.000005
+Ka 1.000000 1.000000 1.000000
+Kd 0.588000 0.588000 0.588000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Bump -bm 0.300000 -o -1.200000 -1.200000 0.000000 -s 0.294118 0.294118 1.000000 E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\REPO\\Downloads\\textures\\FLOOR\\cyberpunk\\Bump.png
+map_Kd -o -1.200000 -1.812000 0.000000 -s 0.294118 0.294118 1.000000 E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\REPO\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\dance-floor.tga
+map_Ns -o -1.200000 -1.200000 0.000000 -s 0.294118 0.294118 1.000000 E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\REPO\\Downloads\\textures\\FLOOR\\cyberpunk\\reflect.png

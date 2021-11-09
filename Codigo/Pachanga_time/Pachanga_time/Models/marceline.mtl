@@ -1,0 +1,46 @@
+# Blender MTL File: 'marceline.blend'
+# Material Count: 4
+
+newmtl lambert2SG
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\marceline-body.tga
+
+newmtl lambert3SG
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\marceline-guitar.tga
+
+newmtl lambert4SG
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\marceline-hair.tga
+
+newmtl lambert5SG
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 0.000000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\marceline-hat.tga
