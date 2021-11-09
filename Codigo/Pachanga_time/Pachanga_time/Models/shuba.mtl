@@ -1,0 +1,46 @@
+# Blender MTL File: 'None'
+# Material Count: 4
+
+newmtl eyes
+Ns 900.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.000000 0.000000 0.000000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Versiones\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\bernie-black.tga
+
+newmtl hat
+Ns 179.999996
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 1.000000 1.000000 1.000000
+Ke 1.000000 1.000000 1.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd -o 0.000000 -1.000000 0.000000 E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Versiones\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\shuba-body.tga
+map_Ke -o 0.000000 -1.000000 0.000000 E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Versiones\\Pachanga-Time\\Modelos\\Shuba_duck\\source\\tex\\Subdivision_Surface.1Surface_Color.jpg
+
+newmtl white
+Ns 179.999996
+Ka 1.000000 1.000000 1.000000
+Kd 0.980000 0.980000 0.980000
+Ks 1.000000 1.000000 1.000000
+Ke 0.950000 0.950000 0.950000
+Ni 1.450000
+d 1.000000
+illum 3
+
+newmtl yellow
+Ns 179.999996
+Ka 1.000000 1.000000 1.000000
+Kd 0.887923 0.783538 0.250158
+Ks 1.000000 1.000000 1.000000
+Ke 0.910000 0.794810 0.261097
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Versiones\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\shuba-yellow.tga
