@@ -15,6 +15,7 @@ Window::Window(GLint windowWidth, GLint windowHeight)
 	height = windowHeight;
 	muevex = muevez = mueve_helices = 2.0f;
 	mueve_llanta = mueve_x_pos_chopper = mueve_y_pos_chopper = 0.0f;
+	apaga_luz_pinata = false;
 	for (size_t i = 0; i < 1024; i++)
 	{
 		keys[i] = 0;
@@ -152,6 +153,17 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 	{
 		theWindow->mueve_x_pos_chopper -= 1.0;
 		theWindow->mueve_helices -= 5.0;
+	}
+
+	//Encender y apagar luz puntual
+	if (key == GLFW_KEY_P)
+	{
+		theWindow->apaga_luz_pinata = false;
+	}
+
+	if (key == GLFW_KEY_L)
+	{
+		theWindow->apaga_luz_pinata = true;
 	}
 
 

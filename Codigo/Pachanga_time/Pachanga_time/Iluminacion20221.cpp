@@ -69,6 +69,8 @@ Model Bernie;
 Model Rei;
 Model Snowman;
 Model Shuba;
+Model Piedra;
+Model Nubes;
 
 
 Model Jake;
@@ -327,7 +329,14 @@ int main()
 	*/
 
 	Terreno_Base = Model();
-	Terreno_Base.LoadModel("Models/terreno.obj");
+	Terreno_Base.LoadModel("Models/terreno-arbol.obj");
+
+	Piedra = Model();
+	Piedra.LoadModel("Models/piedra-animada.obj");
+
+	Nubes = Model();
+	Nubes.LoadModel("Models/clouds.obj");
+
 	//Llanta_M = Model();
 	//Llanta_M.LoadModel("Models/llanta.obj");
 	//Blackhawk_M = Model();
@@ -418,9 +427,23 @@ int main()
 	//contador de luces puntuales
 	unsigned int pointLightCount = 0;
 	//Declaración de primer luz puntual
-	pointLights[0] = PointLight(1.0f, 0.0f, 0.0f,
-		0.0f, 1.0f,
-		2.0f, 1.5f, 1.5f,
+	pointLights[0] = PointLight(1.0f, 0.0f, 0.0f, //COLOR
+		0.0f, 10.0f,
+		-19.0f, -33.0f, 325.0f, //POSICION
+		0.3f, 0.2f, 0.1f);
+	pointLightCount++;
+
+	//Declaración de segunda luz puntual
+	pointLights[1] = PointLight(0.0f, 1.0f, 0.0f, //COLOR
+		0.0f, 10.0f,
+		-23.0f, -33.0f, 292.0f, //POSICION
+		0.3f, 0.2f, 0.1f);
+	pointLightCount++;
+
+	//Declaración de tercera luz puntual en piñata
+	pointLights[2] = PointLight(1.0f, 1.0f, 0.0f, //COLOR
+		0.0f, 10.0f,
+		168.0f, -15.0f, 286.0f, //POSICION
 		0.3f, 0.2f, 0.1f);
 	pointLightCount++;
 
@@ -517,7 +540,7 @@ int main()
 		glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix()));
 		glUniform3f(uniformEyePosition, camera.getCameraPosition().x, camera.getCameraPosition().y, camera.getCameraPosition().z);
 
-		//printf("x: %f, y: %f, z: %f \n", camera.getCameraPosition().x, camera.getCameraPosition().y, camera.getCameraPosition().z);
+		printf("x: %f, y: %f, z: %f \n", camera.getCameraPosition().x, camera.getCameraPosition().y, camera.getCameraPosition().z);
 
 		//luz ligada a la cámara de tipo flash 
 		//glm::vec3 lowerLight = camera.getCameraPosition();
@@ -526,7 +549,14 @@ int main()
 
 		//información al shader de fuentes de iluminación
 		shaderList[0].SetDirectionalLight(&mainLight);
-		shaderList[0].SetPointLights(pointLights, pointLightCount);
+		if (mainWindow.getapaga_luz_pinata()) {
+			shaderList[0].SetPointLights(pointLights, pointLightCount -1);
+		}
+		else {
+			shaderList[0].SetPointLights(pointLights, pointLightCount);
+		}
+
+		
 		shaderList[0].SetSpotLights(spotLights, spotLightCount);
 
 
@@ -549,12 +579,21 @@ int main()
 		model_centro_auto = glm::mat4(1.0);
 		model_chopper = glm::mat4(1.0);
 
-		model = glm::translate(model, glm::vec3(0.0f + mainWindow.getmuevex(),  0.5f , -1.5f + mainWindow.getmuevez()));
+		//Terreno Base
+		model = glm::translate(model, glm::vec3(0.0f,  0.5f , -1.5f));
 		model_centro_auto = model;
 		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Terreno_Base.RenderModel();
+
+		////Piedra Animada
+		//model = glm::translate(model, glm::vec3(0.0f , 0.0f, 0.0f ));
+		//model_centro_auto = model;
+		//model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		//model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//Piedra.RenderModel();
 
 		//Among us
 		model = glm::mat4(1.0);
@@ -694,6 +733,21 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Snowman.RenderModel();
 
+		//Nubes
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Nubes.RenderModel();
+
+		//PIEDRA ANIMADA
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Piedra.RenderModel();
 
 
 		////Luz Auto derecha

@@ -15,6 +15,7 @@ public:
 	GLfloat getYChange();
 	GLfloat getmuevex() { return muevex; }
 	GLfloat getmuevez() { return muevez; }
+	bool getapaga_luz_pinata() { return apaga_luz_pinata; }
 	GLfloat getmueve_llanta() { return mueve_llanta; }
 	GLfloat getmueve_helices() { return mueve_helices; }
 	GLfloat getmueve_x_pos_chopper() { return mueve_x_pos_chopper; }
@@ -35,6 +36,7 @@ private:
 	GLfloat lastY;
 	GLfloat xChange;
 	GLfloat yChange;
+	bool apaga_luz_pinata;
 	GLfloat muevex, muevez, mueve_helices;
 	GLfloat mueve_llanta, mueve_x_pos_chopper, mueve_y_pos_chopper;
 	bool mouseFirstMoved;
