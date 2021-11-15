@@ -166,6 +166,22 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 		theWindow->apaga_luz_pinata = true;
 	}
 
+	if (key == GLFW_KEY_J)
+	{
+		theWindow->mueve_caminante = 1.0f;
+	}
+
+	if (key == GLFW_KEY_G)
+	{
+		theWindow->mueve_nubes = 1.0f;
+	}
+
+	if (key == GLFW_KEY_H)
+	{
+		theWindow->mueve_caminante = 0.0f;
+		theWindow->mueve_nubes = 0.0f;
+	}
+
 
 	if (key >= 0 && key < 1024)
 	{

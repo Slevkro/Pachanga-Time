@@ -105,6 +105,26 @@ static const char* fShader = "shaders/shader_light.frag";
 std::clock_t start;
 double duration, edge = 0.0;
 
+//Caminante del agua
+float caminante_x = 0;
+float caminante_z = 0;
+float offset_caminante = 0.5;
+int num_recta = 1;
+float angulo_caminante = 0.0f;
+float limite_angulo_izq = 0.0f;
+float limite_angulo_der = 0.0f;
+float offset_angulo_caminante = 10.0f;
+bool x_ok = false;
+bool z_ok = false;
+bool angulo_ok = true;
+//Movimiento de las nubes
+float mueve_x_nubes = 0.0f;
+float mueve_z_nubes = 0.0f;
+float rota_y_nubes = 0.0f;
+float offset_rota_nubes = 0.1;
+float offset_mueve_nubes = 5;
+float angulo_mueve_nubes = 10;
+
 //cálculo del promedio de las normales para iluminacion de Phong, no Ground
 void calcAverageNormals(unsigned int * indices, unsigned int indiceCount, GLfloat * vertices, unsigned int verticeCount,
 	unsigned int vLength, unsigned int normalOffset)
@@ -335,7 +355,7 @@ int main()
 	Piedra.LoadModel("Models/piedra-animada.obj");
 
 	Nubes = Model();
-	Nubes.LoadModel("Models/clouds.obj");
+	Nubes.LoadModel("Models/nice-clouds.obj");
 
 	//Llanta_M = Model();
 	//Llanta_M.LoadModel("Models/llanta.obj");
@@ -525,6 +545,118 @@ int main()
 				start = std::clock();
 			}
 		}
+
+		//Animacion basica para el caminante del agua
+		if (mainWindow.getMueveCaminante() == 1.0f) {
+			switch (num_recta)
+			{
+			case 1:
+				limite_angulo_der = - 90;
+				limite_angulo_izq = 0;
+				if (caminante_x < 66) {
+					caminante_x += offset_caminante * deltaTime;
+				}
+				else {
+					num_recta = 2;
+				}
+				break;
+			case 2:
+				limite_angulo_der = -45;
+				limite_angulo_izq = 45;
+				if (caminante_x < (66+70)) {
+					caminante_x += offset_caminante * deltaTime;
+				}
+				else {
+					x_ok = true;
+				}
+				if (caminante_z < 72) {
+					caminante_z += offset_caminante * deltaTime;
+				}
+				else {
+					z_ok = true;
+				}
+				if (x_ok and z_ok) {
+					x_ok = false;
+					z_ok = false;
+					num_recta = 3;
+				}
+				break;
+			case 3:
+				limite_angulo_der = 0;
+				limite_angulo_izq = 90;
+				if (caminante_x > (66 + 70 - 71)) {
+					caminante_x -= offset_caminante * deltaTime;
+				}
+				else {
+					x_ok = true;
+				}
+				if (caminante_z < (72+43)) {
+					caminante_z += offset_caminante * deltaTime;
+				}
+				else {
+					z_ok = true;
+				}
+				if (x_ok and z_ok) {
+					x_ok = false;
+					z_ok = false;
+					num_recta = 4;
+				}
+				break;
+			case 4:
+				limite_angulo_der = -45;
+				limite_angulo_izq = 45;
+				if (caminante_x > (66 + 70 - 71 - 66)) {
+					caminante_x -= offset_caminante * deltaTime;
+				}
+				else {
+					x_ok = true;
+				}
+				if (caminante_z > (72 + 43 - 129)) {
+					caminante_z -= offset_caminante * deltaTime;
+				}
+				else {
+					z_ok = true;
+				}
+				if (x_ok and z_ok) {
+					x_ok = false;
+					z_ok = false;
+					num_recta = 5;
+				}
+				break;
+			case 5:
+				caminante_x = 0;
+				caminante_z = 0;
+				num_recta = 1;
+				limite_angulo_izq = 0.0f;
+				limite_angulo_der = 0.0f;
+				offset_caminante = 0.5f;
+				mainWindow.setMueveCaminante(0.0f);
+				break;
+			default:
+				break;
+			}
+
+			if (angulo_ok) {
+				angulo_caminante -= offset_angulo_caminante * deltaTime;
+				if (angulo_caminante < limite_angulo_der) {
+					angulo_ok = false;
+				}
+			}
+			else {
+				angulo_caminante += offset_angulo_caminante * deltaTime;
+				if (angulo_caminante > limite_angulo_izq) {
+					angulo_ok = true;
+				}
+			}
+		}
+
+		//Animacion compleja para el movimiento de las nubes
+		if (mainWindow.getMueveNubes() == 1.0) {
+			rota_y_nubes += offset_rota_nubes * deltaTime;
+			mueve_x_nubes = 20 * sin(angulo_mueve_nubes * toRadians * 0.3);
+			mueve_z_nubes = 5 * cos(angulo_mueve_nubes * toRadians * 0.5);
+			angulo_mueve_nubes += offset_mueve_nubes * deltaTime;
+		}
 		
 		shaderList[0].UseShader();
 		uniformModel = shaderList[0].GetModelLocation();
@@ -630,9 +762,10 @@ int main()
 
 		//Jesus
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-250.0f, -15.0f, -50.0f));
+		model = glm::translate(model, glm::vec3(-265.0f + caminante_x, -16.0f, -16.0f + caminante_z));
 		model = glm::scale(model, glm::vec3(0.1f, 0.1, 0.1f));
 		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, angulo_caminante * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Jesus.RenderModel();
 
@@ -735,9 +868,10 @@ int main()
 
 		//Nubes
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(40.0f, 50.0f + mueve_x_nubes, 20.0f + mueve_z_nubes));
 		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, rota_y_nubes * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Nubes.RenderModel();
 

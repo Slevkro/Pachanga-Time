@@ -20,6 +20,10 @@ public:
 	GLfloat getmueve_helices() { return mueve_helices; }
 	GLfloat getmueve_x_pos_chopper() { return mueve_x_pos_chopper; }
 	GLfloat getmueve_y_pos_chopper() { return mueve_y_pos_chopper; }
+	GLfloat getMueveCaminante() { return mueve_caminante; }
+	void setMueveCaminante(GLfloat movimiento) { mueve_caminante = movimiento; }
+	GLfloat getMueveNubes() { return mueve_nubes; }
+	void setMueveNubes(GLfloat inicio) { mueve_nubes = inicio; }
 	bool getShouldClose() {
 		return  glfwWindowShouldClose(mainWindow);}
 	bool* getsKeys() { return keys; }
@@ -39,6 +43,8 @@ private:
 	bool apaga_luz_pinata;
 	GLfloat muevex, muevez, mueve_helices;
 	GLfloat mueve_llanta, mueve_x_pos_chopper, mueve_y_pos_chopper;
+	GLfloat mueve_caminante = 0.0f;
+	GLfloat mueve_nubes = 0.0f;
 	bool mouseFirstMoved;
 	static void ManejaTeclado(GLFWwindow* window, int key, int code, int action, int mode);
 	static void ManejaMouse(GLFWwindow* window, double xPos, double yPos);
