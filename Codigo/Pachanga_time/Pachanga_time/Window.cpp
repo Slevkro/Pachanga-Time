@@ -176,6 +176,11 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 		theWindow->mueve_nubes = 1.0f;
 	}
 
+	if (key == GLFW_KEY_M)
+	{
+		theWindow->mueve_roca = 1.0f;
+	}
+
 	if (key == GLFW_KEY_H)
 	{
 		theWindow->mueve_caminante = 0.0f;

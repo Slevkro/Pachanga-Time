@@ -105,7 +105,7 @@ static const char* fShader = "shaders/shader_light.frag";
 std::clock_t start;
 double duration, edge = 0.0;
 
-//Caminante del agua
+//Caminante del agua (Basica)
 float caminante_x = 0;
 float caminante_z = 0;
 float offset_caminante = 0.5;
@@ -117,13 +117,35 @@ float offset_angulo_caminante = 10.0f;
 bool x_ok = false;
 bool z_ok = false;
 bool angulo_ok = true;
-//Movimiento de las nubes
+//Movimiento de las nubes (Compleja)
 float mueve_x_nubes = 0.0f;
 float mueve_z_nubes = 0.0f;
 float rota_y_nubes = 0.0f;
 float offset_rota_nubes = 0.1;
 float offset_mueve_nubes = 5;
 float angulo_mueve_nubes = 10;
+//Marceline (Extra)
+float offset_mueve_marceline = 5;
+float mueve_marceline = 0.0;
+float angulo_mueve_marceline = 10;
+//Movimiento de la roca (Compleja)
+float rota_y_roca = 0.0f;
+float rota_z_roca = 0.0f;
+float offset_rota_roca = 0.1f;
+float offset_mueve_roca = 0.1f;
+float mueve_x_roca = 0.0f;
+float mueve_y_roca = 0.0f;
+float altura_y_roca = 0.0f;
+//float offset_mueve_roca = 5;
+bool rotacion_completa = false;
+bool altura_completa = false;
+bool inicia_animacion_roca = true;
+bool termina_animacion_roca = false;
+double tiempo_animacion;
+double start_animacion;
+float velocidad = 0.0;
+
+
 
 //cálculo del promedio de las normales para iluminacion de Phong, no Ground
 void calcAverageNormals(unsigned int * indices, unsigned int indiceCount, GLfloat * vertices, unsigned int verticeCount,
@@ -352,7 +374,7 @@ int main()
 	Terreno_Base.LoadModel("Models/terreno-arbol.obj");
 
 	Piedra = Model();
-	Piedra.LoadModel("Models/piedra-animada.obj");
+	Piedra.LoadModel("Models/piedra-centrada.obj");
 
 	Nubes = Model();
 	Nubes.LoadModel("Models/nice-clouds.obj");
@@ -657,6 +679,56 @@ int main()
 			mueve_z_nubes = 5 * cos(angulo_mueve_nubes * toRadians * 0.5);
 			angulo_mueve_nubes += offset_mueve_nubes * deltaTime;
 		}
+
+		//Animacion para el easter egg de la roca
+		if (mainWindow.getMueveRoca() == 1.0f) {
+			if (!termina_animacion_roca) {
+				if (inicia_animacion_roca) {
+					start_animacion = std::clock();
+					inicia_animacion_roca = false;
+				}
+				tiempo_animacion = (std::clock() - start_animacion) / (double)CLOCKS_PER_SEC;
+				printf("Tiempo: %f\n", tiempo_animacion);
+
+				if (tiempo_animacion < 2) {
+					velocidad = 5;
+				}
+				else if (tiempo_animacion < 5) {
+					velocidad = 10;
+				}
+				else{
+					velocidad = 25;
+				}
+				rota_y_roca += velocidad * deltaTime; //Rotacion
+				if (tiempo_animacion > 8) {
+					rotacion_completa = true;
+				}
+
+				if (velocidad == 25) { //Rotacion completa
+					if (altura_y_roca < 170.0f) {
+						altura_y_roca += 1 * deltaTime;
+					}
+					else {
+						altura_completa = true;
+					}
+					if (altura_completa) {
+						mueve_x_roca = offset_mueve_roca;
+						offset_mueve_roca += 1;
+						mueve_y_roca = -(0.01 * pow(mueve_x_roca, 2));
+						if (rota_z_roca < 35) {
+							rota_z_roca += 0.1 * deltaTime;
+						}
+						
+					}
+					if (mueve_y_roca < -250.0f and altura_completa) {
+						termina_animacion_roca = true;
+					}
+				}
+				
+			}
+			
+			
+		}
 		
 		shaderList[0].UseShader();
 		uniformModel = shaderList[0].GetModelLocation();
@@ -729,8 +801,8 @@ int main()
 
 		//Among us
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(200.0f, -15.0f, 210.0f));
-		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+		model = glm::translate(model, glm::vec3(180.0f, 2.0f, 162.0f));
+		model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
 		//model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Among_Us.RenderModel();
@@ -788,11 +860,15 @@ int main()
 
 		//Marceline entrada
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-50.0f, -30.0f, 280.0f));
+		model = glm::translate(model, glm::vec3(-50.0f, -30.0f + mueve_marceline, 280.0f));
 		model = glm::scale(model, glm::vec3(5.0f, 5.0f, 5.0f));
 		model = glm::rotate(model, 120 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Marceline.RenderModel();
+
+		//Movimiento de marceline
+		mueve_marceline = 10 * sin(angulo_mueve_marceline * toRadians * 0.3);
+		angulo_mueve_marceline += offset_mueve_marceline * deltaTime;
 
 		//Cheems fuerte Piñata
 		model = glm::mat4(1.0);
@@ -877,9 +953,11 @@ int main()
 
 		//PIEDRA ANIMADA
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
+		model = glm::translate(model, glm::vec3(168.0f , 4.0f + mueve_y_roca + altura_y_roca, 153.0f + mueve_x_roca));
+		model = glm::scale(model, glm::vec3(12.0f, 12.0f, 12.0f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, rota_y_roca * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, rota_z_roca * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Piedra.RenderModel();
 
