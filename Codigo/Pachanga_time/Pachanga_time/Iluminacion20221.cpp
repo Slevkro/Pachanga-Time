@@ -104,6 +104,7 @@ static const char* fShader = "shaders/shader_light.frag";
 //Ciclo dia y noche
 std::clock_t start;
 double duration, edge = 0.0;
+int nightLights = 0;
 
 //Caminante del agua (Basica)
 float caminante_x = 0;
@@ -457,12 +458,12 @@ int main()
 	skyboxDay = Skybox(skyboxDayFaces);
 
 	Material_brillante = Material(4.0f, 256);
-	Material_opaco = Material(0.3f, 4);
+	Material_opaco = Material(1.0f, 40);
 
 	//posición inicial del helicóptero
 	glm::vec3 posblackhawk = glm::vec3(-20.0f, 6.0f, -1.0);
 
-	//luz direccional, sólo 1 y siempre debe de existir
+	//luz direccional, sólo 1 y siempre debe de existir [0.3373f, 0.4902f, 0.6235f,]
 	mainLight = DirectionalLight(1.0f, 1.0f, 1.0f,
 		0.3f, 0.3f,
 		0.0f, 0.0f, -1.0f);
@@ -484,27 +485,26 @@ int main()
 
 	//Declaración de tercera luz puntual en piñata
 	pointLights[2] = PointLight(1.0f, 1.0f, 0.0f, //COLOR
-		0.0f, 10.0f,
-		168.0f, -15.0f, 286.0f, //POSICION
+		10.0f, 0.0f,
+		166.0f, -98.0f, 397.0f, //POSICION
 		0.3f, 0.2f, 0.1f);
 	pointLightCount++;
 
 	unsigned int spotLightCount = 0;
-	//linterna que pasa a ser para el helicoptero
+
+	//Luces SpotLights para la pista de baile
 	spotLights[0] = SpotLight(1.0f, 1.0f, 1.0f,
 		0.0f, 2.0f,
-		0.0f, 0.0f, 0.0f,
-		0.0f, -1.0f, 0.0f,
+		-12.0f, 60.0f, 121.0f, //Posicion
+		0.0f, -1.0f, 0.0f, //Direccion
 		1.0f, 0.0f, 0.0f,
 		5.0f);
 	spotLightCount++;
 
-	
-
 	//Luz auto derecha
 	spotLights[2] = SpotLight(1.0f, 1.0f, 0.0f,
 		0.0f, 2.0f,
-		0.0f, 0.0f, 0.0f,
+		21.0f, 60.0f, 94.0f,
 		0.0f, -1.0f, 0.0f,
 		1.0f, 0.0f, 0.0f,
 		5.0f);
@@ -513,24 +513,13 @@ int main()
 	//Luz auto izquierda
 	spotLights[1] = SpotLight(1.0f, 1.0f, 0.0f,
 		0.0f, 2.0f,
-		0.0f, 0.0f, 0.0f,
+		-19.0f, 60.0f, 84.0f,
 		0.0f, -1.0f, 0.0f,
 		1.0f, 0.0f, 0.0f,
 		5.0f);
 	spotLightCount++;
 	
-	//luz fija
-	//spotLights[3] = SpotLight(0.0f, 0.0f, 1.0f,
-	//	1.0f, 2.0f,
-	//	5.0f, 10.0f, 0.0f,
-	//	0.0f, -5.0f, 0.0f,
-	//	1.0f, 0.0f, 0.0f,
-	//	15.0f);
-	//spotLightCount++;
 
-	//luz de helicóptero
-		
-	//luz de faro
 
 	
 
@@ -558,12 +547,16 @@ int main()
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		//150 segundos = 1:30 min
-		if (duration <= 90) {
+		if (duration <= 10) { //Dia
+			mainLight.setLight(glm::vec3(1.0f, 1.0f, 1.0f));
 			skyboxDay.DrawSkybox(camera.calculateViewMatrix(), projection);
+			nightLights = 3;
 		}
-		else {
+		else { //Noche
+			mainLight.setLight(glm::vec3(0.3373f, 0.4902f, 0.6235f)); //Color de luz ambiental noche
 			skyboxNight.DrawSkybox(camera.calculateViewMatrix(), projection);
-			if (duration >= 180) {
+			nightLights = 0;
+			if (duration >= 20) { //Regresar al dia
 				start = std::clock();
 			}
 		}
@@ -753,12 +746,13 @@ int main()
 
 		//información al shader de fuentes de iluminación
 		shaderList[0].SetDirectionalLight(&mainLight);
-		if (mainWindow.getapaga_luz_pinata()) {
-			shaderList[0].SetPointLights(pointLights, pointLightCount -1);
-		}
-		else {
-			shaderList[0].SetPointLights(pointLights, pointLightCount);
-		}
+		shaderList[0].SetPointLights(pointLights, pointLightCount - nightLights);
+		//if (mainWindow.getapaga_luz_pinata()) {
+		//	shaderList[0].SetPointLights(pointLights, pointLightCount -1);
+		//}
+		//else {
+		//	shaderList[0].SetPointLights(pointLights, pointLightCount);
+		//}
 
 		
 		shaderList[0].SetSpotLights(spotLights, spotLightCount);
@@ -789,6 +783,7 @@ int main()
 		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Terreno_Base.RenderModel();
 
 		////Piedra Animada
@@ -814,15 +809,6 @@ int main()
 		model = glm::rotate(model, 140 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Knuckles.RenderModel();
-
-		//Pista de baile
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 106.0f));
-		model = glm::scale(model, glm::vec3(9.0f, 9.0f, 9.0f));
-		model = glm::rotate(model, 3 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::rotate(model, 3 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Dance_Floor.RenderModel();
 
 		//Lago
 		model = glm::mat4(1.0);
@@ -961,6 +947,15 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Piedra.RenderModel();
 
+		//Pista de baile
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 106.0f));
+		model = glm::scale(model, glm::vec3(9.0f, 9.0f, 9.0f));
+		model = glm::rotate(model, 3 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, 3 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Dance_Floor.RenderModel();
 
 		////Luz Auto derecha
 		//glm::vec3 faros = glm::vec3(mainWindow.getmuevex() -10.0, 0.0f, -4.0f + mainWindow.getmuevez());
