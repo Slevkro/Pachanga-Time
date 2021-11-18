@@ -107,28 +107,28 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 		glfwSetWindowShouldClose(window, GL_TRUE);
 	}
 	//AUTO
-	if (key == GLFW_KEY_Y)
-	{
-		theWindow-> muevex += 1.0;
-		theWindow->mueve_llanta += 2.0;
-	}
-	if (key == GLFW_KEY_U)
-	{
-		theWindow-> muevex -= 1.0;
-		theWindow->mueve_llanta -= 2.0;
-	}
+	//if (key == GLFW_KEY_Y)
+	//{
+	//	theWindow-> muevex += 1.0;
+	//	theWindow->mueve_llanta += 2.0;
+	//}
+	//if (key == GLFW_KEY_U)
+	//{
+	//	theWindow-> muevex -= 1.0;
+	//	theWindow->mueve_llanta -= 2.0;
+	//}
 
-	if (key == GLFW_KEY_I)
-	{
-		theWindow->muevez += 1.0;
-		theWindow->mueve_llanta += 2.0;
-	}
+	//if (key == GLFW_KEY_I)
+	//{
+	//	theWindow->muevez += 1.0;
+	//	theWindow->mueve_llanta += 2.0;
+	//}
 
-	if (key == GLFW_KEY_O)
-	{
-		theWindow->muevez -= 1.0;
-		theWindow->mueve_llanta -= 2.0;
-	}
+	//if (key == GLFW_KEY_O)
+	//{
+	//	theWindow->muevez -= 1.0;
+	//	theWindow->mueve_llanta -= 2.0;
+	//}
 
 	//HELICOPTERO
 	if (key == GLFW_KEY_F)
@@ -149,7 +149,7 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 		theWindow->mueve_helices += 5.0;
 	}
 
-	if (key == GLFW_KEY_C)
+	if (key == GLFW_KEY_D)
 	{
 		theWindow->mueve_x_pos_chopper -= 1.0;
 		theWindow->mueve_helices -= 5.0;
@@ -185,6 +185,36 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 	{
 		theWindow->mueve_caminante = 0.0f;
 		theWindow->mueve_nubes = 0.0f;
+	}
+
+	if (key == GLFW_KEY_Z)
+	{
+		theWindow->tipo_camara = 1;
+		theWindow->cameraFirstChange = true;
+	}
+
+	if (key == GLFW_KEY_X)
+	{
+		theWindow->tipo_camara = 2;
+		theWindow->cameraFirstChange = true;
+	}
+
+	if (key == GLFW_KEY_C)
+	{
+		theWindow->tipo_camara = 3;
+		theWindow->cameraFirstChange = true;
+	}
+
+	if (key == GLFW_KEY_V)
+	{
+		theWindow->tipo_camara = 4;
+		theWindow->cameraFirstChange = true;
+	}
+
+	if (key == GLFW_KEY_B)
+	{
+		theWindow->tipo_camara = 5;
+		theWindow->cameraFirstChange = true;
 	}
 
 

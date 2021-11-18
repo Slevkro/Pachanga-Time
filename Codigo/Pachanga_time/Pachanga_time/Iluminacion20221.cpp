@@ -145,6 +145,11 @@ bool termina_animacion_roca = false;
 double tiempo_animacion;
 double start_animacion;
 float velocidad = 0.0;
+//Camara
+bool primer_cambio_camara = true;
+float nueva_x_camara, nueva_y_camara, nueva_z_camara = 0.0f;
+float camara_x_inicial, camara_y_inicial, camara_z_inicial = 0.0f;
+glm::vec3 vectorUp;
 
 
 
@@ -541,20 +546,36 @@ int main()
 		//Recibir eventos del usuario
 		glfwPollEvents();
 		camera.keyControl(mainWindow.getsKeys(), deltaTime);
+		//if (mainWindow.getTipoCamara() != 4) {
 		camera.mouseControl(mainWindow.getXChange(), mainWindow.getYChange());
-
+		//}
+		//else { //Ahorrarse el set pos para que mire hacia abajo
+			//camera.mouseControl(0.0f, -90.0f);
+		//}
 		// Clear the window
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		//150 segundos = 1:30 min
 		if (duration <= 10) { //Dia
 			mainLight.setLight(glm::vec3(1.0f, 1.0f, 1.0f));
-			skyboxDay.DrawSkybox(camera.calculateViewMatrix(), projection);
+			if (mainWindow.getTipoCamara() != 4) {
+				skyboxDay.DrawSkybox(camera.calculateViewMatrix(false), projection);
+			}
+			else {
+				skyboxDay.DrawSkybox(camera.calculateViewMatrix(true), projection);
+			}
+			
 			nightLights = 3;
 		}
 		else { //Noche
 			mainLight.setLight(glm::vec3(0.3373f, 0.4902f, 0.6235f)); //Color de luz ambiental noche
-			skyboxNight.DrawSkybox(camera.calculateViewMatrix(), projection);
+			if (mainWindow.getTipoCamara() != 4) {
+				skyboxNight.DrawSkybox(camera.calculateViewMatrix(false), projection);
+			}
+			else {
+				skyboxNight.DrawSkybox(camera.calculateViewMatrix(true), projection);
+			}
+			
 			nightLights = 0;
 			if (duration >= 20) { //Regresar al dia
 				start = std::clock();
@@ -723,6 +744,59 @@ int main()
 			
 		}
 		
+		//Cambio de camaras ligadas al piso y camaras aereas.
+
+		switch (mainWindow.getTipoCamara())
+		{
+		case 1: //Entrada
+			camara_x_inicial = -187.0f;
+			nueva_y_camara = -70.0f;
+			camara_z_inicial = 302.0f;
+			break;
+
+		case 2: //Nieve
+			camara_x_inicial = 116.0f;
+			nueva_y_camara = -85.0f;
+			camara_z_inicial = 413.0f;
+			break;
+
+		case 3: //Arbol
+			camara_x_inicial = 18.0f;
+			nueva_y_camara = 20.0f;
+			camara_z_inicial = 186.0f;
+			break;
+
+		case 4: //Aerea
+			camara_x_inicial = -187.0f;
+			nueva_y_camara = 180.0f;
+			camara_z_inicial = 302.0f;
+			//camera.setVectorUp(glm::vec3(1.0f, 0.0f, 0.0f));
+			break;
+
+		case 5: //Libre
+			camara_x_inicial = camera.getCameraPosition().x;
+			nueva_y_camara = camera.getCameraPosition().y;
+			camara_z_inicial = camera.getCameraPosition().z;
+			break;
+
+		default:
+			break;
+		}
+
+		if (mainWindow.getCameraFirstChange()) {
+			nueva_x_camara = camara_x_inicial;
+			nueva_z_camara = camara_z_inicial;
+			mainWindow.setCameraFirstChange(false);
+		}
+		else {
+			nueva_x_camara = camera.getCameraPosition().x;
+			nueva_z_camara = camera.getCameraPosition().z;
+		}
+
+		camera.setPosition(glm::vec3(nueva_x_camara, nueva_y_camara, nueva_z_camara));
+
+
+
 		shaderList[0].UseShader();
 		uniformModel = shaderList[0].GetModelLocation();
 		uniformProjection = shaderList[0].GetProjectionLocation();
@@ -734,7 +808,13 @@ int main()
 		uniformShininess = shaderList[0].GetShininessLocation();
 
 		glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
-		glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix()));
+		if (mainWindow.getTipoCamara() != 4) {
+			glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix(false)));
+		}
+		else {
+			glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix(true)));
+		}
+		
 		glUniform3f(uniformEyePosition, camera.getCameraPosition().x, camera.getCameraPosition().y, camera.getCameraPosition().z);
 
 		printf("x: %f, y: %f, z: %f \n", camera.getCameraPosition().x, camera.getCameraPosition().y, camera.getCameraPosition().z);

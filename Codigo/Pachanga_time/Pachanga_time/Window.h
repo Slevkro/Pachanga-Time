@@ -25,6 +25,12 @@ public:
 	GLfloat getMueveNubes() { return mueve_nubes; }
 	void setMueveNubes(GLfloat inicio) { mueve_nubes = inicio; }
 	GLfloat getMueveRoca() { return mueve_roca; }
+
+	int getTipoCamara() { return tipo_camara; }
+	void setTipoCamara(int tipo) { tipo_camara = tipo; }
+	bool getCameraFirstChange() { return cameraFirstChange; }
+	void setCameraFirstChange(bool change) { cameraFirstChange = change; }
+
 	bool getShouldClose() {
 		return  glfwWindowShouldClose(mainWindow);}
 	bool* getsKeys() { return keys; }
@@ -47,7 +53,9 @@ private:
 	GLfloat mueve_caminante = 0.0f;
 	GLfloat mueve_nubes = 0.0f;
 	GLfloat mueve_roca = 0.0f;
+	int tipo_camara = 1;
 	bool mouseFirstMoved;
+	bool cameraFirstChange;
 	static void ManejaTeclado(GLFWwindow* window, int key, int code, int action, int mode);
 	static void ManejaMouse(GLFWwindow* window, double xPos, double yPos);
 

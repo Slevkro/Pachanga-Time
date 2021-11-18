@@ -15,10 +15,12 @@ public:
 
 	void keyControl(bool* keys, GLfloat deltaTime);
 	void mouseControl(GLfloat xChange, GLfloat yChange);
+	void setPosition(glm::vec3 newPosition);
+	void setVectorUp(glm::vec3 newVectorUp);
 
 	glm::vec3 getCameraPosition();
 	glm::vec3 getCameraDirection();
-	glm::mat4 calculateViewMatrix();
+	glm::mat4 calculateViewMatrix(bool aerea);
 
 	~Camera();
 

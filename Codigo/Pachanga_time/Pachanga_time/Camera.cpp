@@ -62,9 +62,15 @@ void Camera::mouseControl(GLfloat xChange, GLfloat yChange)
 	update();
 }
 
-glm::mat4 Camera::calculateViewMatrix()
+glm::mat4 Camera::calculateViewMatrix(bool aerea)
 {
-	return glm::lookAt(position, position + front, up);
+	if (aerea) {
+		return glm::lookAt(position, glm::vec3(position.x, -1.0f, position.z), glm::vec3(1.0f, 0.0f, 0.0f));
+	}
+	else {
+		return glm::lookAt(position, position + front, up);
+	}
+	
 }
 
 glm::vec3 Camera::getCameraPosition()
@@ -87,6 +93,14 @@ void Camera::update()
 
 	right = glm::normalize(glm::cross(front, worldUp));
 	up = glm::normalize(glm::cross(right, front));
+}
+
+void Camera::setPosition(glm::vec3 newPosition) {
+	position = newPosition;
+}
+
+void Camera::setVectorUp(glm::vec3 newVectorUp) {
+	worldUp = newVectorUp;
 }
 
 
