@@ -21,6 +21,7 @@ public:
 	glm::vec3 getCameraPosition();
 	glm::vec3 getCameraDirection();
 	glm::mat4 calculateViewMatrix(bool aerea);
+	glm::vec3 getCameraView() { return position + front; };
 
 	~Camera();
 

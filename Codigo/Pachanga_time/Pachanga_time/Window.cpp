@@ -217,6 +217,19 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 		theWindow->cameraFirstChange = true;
 	}
 
+	if (key == GLFW_KEY_N)
+	{
+		if (action == GLFW_PRESS) {
+			theWindow->baile = 1.0;
+			printf("se PRESIONO la tecla xd");
+		}
+		else if (action == GLFW_RELEASE) {
+			theWindow->baile = 0.0;
+			printf("se SOLTO la tecla xd");
+		}
+		
+	}
+
 
 	if (key >= 0 && key < 1024)
 	{
