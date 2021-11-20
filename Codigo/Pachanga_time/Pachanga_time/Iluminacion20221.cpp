@@ -90,6 +90,7 @@ Material Material_opaco;
 DirectionalLight mainLight;
 //para declarar varias luces de tipo pointlight
 PointLight pointLights[MAX_POINT_LIGHTS];
+PointLight pointLightsNight[MAX_POINT_LIGHTS];
 SpotLight spotLights[MAX_SPOT_LIGHTS];
 
 
@@ -109,6 +110,7 @@ static const char* fShader = "shaders/shader_light.frag";
 std::clock_t start;
 double duration, edge = 0.0;
 int nightLights = 0;
+bool dia;
 
 //Caminante del agua (Basica)
 float caminante_x = 0;
@@ -151,9 +153,14 @@ double start_animacion;
 float velocidad = 0.0;
 //Camara
 bool primer_cambio_camara = true;
+bool inicio_entrada = true;
+bool inicio_nieve = true;
+bool inicio_arbol = true;
+bool inicio_aerea = true;
 float nueva_x_camara, nueva_y_camara, nueva_z_camara = 0.0f;
 float camara_x_inicial, camara_y_inicial, camara_z_inicial = 0.0f;
-glm::vec3 vectorUp;
+glm::vec3 vectorUp, cam_entrada_anterior, cam_nieve_anterior, cam_arbol_anterior, 
+		cam_aerea_anterior;
 //Luces Spotlight
 //glm::vec3 luz_pista_alpha, luz_pista_beta, luz_pista_gamma;
 float luz_pista_x, luz_pista_y, luz_pista_z;
@@ -447,7 +454,7 @@ int main()
 	*/
 
 	Terreno_Base = Model();
-	Terreno_Base.LoadModel("Models/terreno-arbol.obj");
+	Terreno_Base.LoadModel("Models/terreno.obj");
 
 	Piedra = Model();
 	Piedra.LoadModel("Models/piedra-centrada.obj");
@@ -475,7 +482,7 @@ int main()
 	Dance_Floor.LoadModel("Models/dance-floor.obj");
 
 	Lago = Model();
-	Lago.LoadModel("Models/lago.obj");
+	Lago.LoadModel("Models/lago-pintado.obj");
 
 	Rei = Model();
 	Rei.LoadModel("Models/rei.obj");
@@ -550,6 +557,9 @@ int main()
 		0.0f, 0.0f, -1.0f);
 	//contador de luces puntuales
 	unsigned int pointLightCount = 0;
+	unsigned int pointLightCountNight = 0;
+
+	//Luces de día
 	//Declaración de primer luz puntual
 	pointLights[0] = PointLight(1.0f, 0.0f, 0.0f, //COLOR
 		0.0f, 10.0f,
@@ -570,6 +580,28 @@ int main()
 		166.0f, -98.0f, 397.0f, //POSICION
 		0.3f, 0.2f, 0.1f);
 	pointLightCount++;
+
+	//LUCES DE NOCHE
+
+	pointLightsNight[2] = PointLight(1.0f, 0.0f, 0.0f, //COLOR
+		0.0f, 10.0f,
+		-19.0f, -33.0f, 325.0f, //POSICION
+		0.3f, 0.2f, 0.1f);
+	pointLightCountNight++;
+
+	//Declaración de segunda luz puntual
+	pointLightsNight[1] = PointLight(0.0f, 1.0f, 0.0f, //COLOR
+		0.0f, 10.0f,
+		-23.0f, -33.0f, 292.0f, //POSICION
+		0.3f, 0.2f, 0.1f);
+	pointLightCountNight++;
+
+	//Declaración de tercera luz puntual en piñata
+	pointLightsNight[0] = PointLight(1.0f, 1.0f, 0.0f, //COLOR
+		10.0f, 0.0f,
+		166.0f, -98.0f, 397.0f, //POSICION
+		0.3f, 0.2f, 0.1f);
+	pointLightCountNight++;
 
 	unsigned int spotLightCount = 0;
 
@@ -641,8 +673,8 @@ int main()
 			else {
 				skyboxDay.DrawSkybox(camera.calculateViewMatrix(true), projection);
 			}
-			
-			nightLights = 3;
+			dia = true;
+			nightLights = 2;
 		}
 		else { //Noche
 			mainLight.setLight(glm::vec3(0.3373f, 0.4902f, 0.6235f)); //Color de luz ambiental noche
@@ -652,7 +684,7 @@ int main()
 			else {
 				skyboxNight.DrawSkybox(camera.calculateViewMatrix(true), projection);
 			}
-			
+			dia = false;
 			nightLights = 0;
 			if (duration >= 20) { //Regresar al dia
 				start = std::clock();
@@ -826,28 +858,59 @@ int main()
 		switch (mainWindow.getTipoCamara())
 		{
 		case 1: //Entrada
-			camara_x_inicial = -177.0f;
+			if (inicio_entrada) { //Se toma la inicial
+				camara_x_inicial = cam_entrada_anterior.x = -177.0f;
+				camara_z_inicial = cam_entrada_anterior.x = 302.0f;
+				inicio_entrada = false;
+			}
+			else {  //Se toma la anterior
+				camara_x_inicial = cam_entrada_anterior.x;
+				camara_z_inicial = cam_entrada_anterior.z;
+			}
 			nueva_y_camara = -65.0f;
-			camara_z_inicial = 302.0f;
 			break;
 
 		case 2: //Nieve
-			camara_x_inicial = 116.0f;
+			if (inicio_nieve) { //Se toma la inicial
+				camara_x_inicial = cam_nieve_anterior.x = 116.0f;
+				camara_z_inicial = cam_nieve_anterior.x = 413.0f;
+				inicio_nieve = false;
+			}
+			else {  //Se toma la anterior
+				camara_x_inicial = cam_nieve_anterior.x;
+				camara_z_inicial = cam_nieve_anterior.z;
+			}
+			//camara_x_inicial = 116.0f;
+			//nueva_y_camara = -85.0f;
+			//camara_z_inicial = 413.0f;
 			nueva_y_camara = -85.0f;
-			camara_z_inicial = 413.0f;
 			break;
 
 		case 3: //Arbol
-			camara_x_inicial = 18.0f;
+			if (inicio_arbol) { //Se toma la inicial
+				camara_x_inicial = cam_arbol_anterior.x = 18.0f;
+				camara_z_inicial = cam_arbol_anterior.z = 186.0f;
+				inicio_arbol = false;
+			}
+			else {  //Se toma la anterior
+				camara_x_inicial = cam_arbol_anterior.x;
+				camara_z_inicial = cam_arbol_anterior.z;
+			}
 			nueva_y_camara = 20.0f;
-			camara_z_inicial = 186.0f;
 			break;
 
 		case 4: //Aerea
-			camara_x_inicial = -187.0f;
+
+			if (inicio_aerea) { //Se toma la inicial
+				camara_x_inicial = cam_aerea_anterior.x = -187.0f;
+				camara_z_inicial = cam_aerea_anterior.z = 302.0f;
+				inicio_aerea = false;
+			}
+			else {  //Se toma la anterior
+				camara_x_inicial = cam_aerea_anterior.x;
+				camara_z_inicial = cam_aerea_anterior.z;
+			}
 			nueva_y_camara = 180.0f;
-			camara_z_inicial = 302.0f;
-			//camera.setVectorUp(glm::vec3(1.0f, 0.0f, 0.0f));
 			break;
 
 		case 5: //Libre
@@ -868,6 +931,28 @@ int main()
 		else {
 			nueva_x_camara = camera.getCameraPosition().x;
 			nueva_z_camara = camera.getCameraPosition().z;
+
+			switch (mainWindow.getTipoCamara()) //Guardado de posiciones anteriores
+			{
+			case 1:
+				cam_entrada_anterior.x = camera.getCameraPosition().x;
+				cam_entrada_anterior.z = camera.getCameraPosition().z;
+				break;
+			case 2:
+				cam_nieve_anterior.x = camera.getCameraPosition().x;
+				cam_nieve_anterior.z = camera.getCameraPosition().z;
+				break;
+			case 3:
+				cam_arbol_anterior.x = camera.getCameraPosition().x;
+				cam_arbol_anterior.z = camera.getCameraPosition().z;
+				break;
+			case 4:
+				cam_aerea_anterior.x = camera.getCameraPosition().x;
+				cam_aerea_anterior.z = camera.getCameraPosition().z;
+				break;
+			default:
+				break;
+			}
 		}
 
 		camera.setPosition(glm::vec3(nueva_x_camara, nueva_y_camara, nueva_z_camara));
@@ -958,7 +1043,7 @@ int main()
 		//numerador_angulo = (view_camara.x * avatar.x) + (view_camara.z * avatar.z);
 		//denominador_angulo = sqrt(pow(view_camara.x, 2) + pow(view_camara.z, 2)) 
 		//	* sqrt(pow(avatar.x, 2) + pow(avatar.z, 2));
-		//rotacion_avatar_y = acos(numerador_angulo/denominador_angulo);
+		rotacion_avatar_y = camera.getCameraDirection().z;
 		//printf("Rotacion Avatar: %f\n", rotacion_avatar_y);
 
 		shaderList[0].UseShader();
@@ -990,13 +1075,26 @@ int main()
 
 		//información al shader de fuentes de iluminación
 		shaderList[0].SetDirectionalLight(&mainLight);
-		shaderList[0].SetPointLights(pointLights, pointLightCount - nightLights);
-		//if (mainWindow.getapaga_luz_pinata()) {
-		//	shaderList[0].SetPointLights(pointLights, pointLightCount -1);
-		//}
-		//else {
-		//	shaderList[0].SetPointLights(pointLights, pointLightCount);
-		//}
+		//shaderList[0].SetPointLights(pointLights, pointLightCount - nightLights);
+
+		if (dia) { //Luz que enciende y apaga
+			if (mainWindow.getapaga_luz_pinata()) {
+				shaderList[0].SetPointLights(pointLightsNight, pointLightCount - nightLights - 1);
+			}
+			else {
+				shaderList[0].SetPointLights(pointLightsNight, pointLightCount - nightLights);
+			}
+		}
+		else {
+			if (mainWindow.getapaga_luz_pinata()) {
+				shaderList[0].SetPointLights(pointLights, pointLightCount - nightLights - 1);
+			}
+			else {
+				shaderList[0].SetPointLights(pointLights, pointLightCount - nightLights);
+			}
+		}
+		
+		
 
 		
 		shaderList[0].SetSpotLights(spotLights, spotLightCount);
@@ -1051,7 +1149,9 @@ int main()
 		//model = glm::translate(model, glm::vec3(-177.0f + 5.0, -65.0f - 30.0, 302.0f));
 		model = glm::scale(model, glm::vec3(4.5f, 4.5f, 4.5f));
 		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::rotate(model, rotacion_avatar_y, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, rotacion_avatar_y, glm::vec3(0.0f, -1.0f, 0.0f));
+		//model = glm::rotate(model, rotacion_avatar_y, glm::vec3(0.0f, 1.0f, 0.0f));
+		//model = glm::rotate(model, rotacion_avatar_y, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Finn.RenderModel();
 
@@ -1082,7 +1182,7 @@ int main()
 
 		//Rei
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-60.0f, 10.0f, 70.0f));
+		model = glm::translate(model, glm::vec3(-26.0f, 5.0f, 80.0f));
 		model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
 		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
@@ -1090,7 +1190,7 @@ int main()
 
 		//Shuba
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-60.0f, 10.0f, 120.0f));
+		model = glm::translate(model, glm::vec3(20.0f, 8.0f, 138.0f));
 		model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));
 		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
@@ -1220,6 +1320,278 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		//Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Dance_Floor.RenderModel();
+
+		//Esferas del arbol
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(41.0f, 88.0f, 71.0f));
+		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		color = glm::vec3(0.47f, 0.47f, 0.47f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		sp.render(); //Renderiza esfera
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(51.0f, 109.0f, 77.0f));
+		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		color = glm::vec3(0.47f, 0.47f, 0.47f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		sp.render(); //Renderiza esfera
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(45.0f, 131.0f, 73.0f));
+		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		color = glm::vec3(0.47f, 0.47f, 0.47f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		sp.render(); //Renderiza esfera
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(44.0f, 148.0f, 70.0f));
+		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		color = glm::vec3(0.47f, 0.47f, 0.47f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		sp.render(); //Renderiza esfera
+		//-------------
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(31.0f, 97.0f, 52.0f));
+		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		color = glm::vec3(0.47f, 0.47f, 0.47f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		sp.render(); //Renderiza esfera
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(34.0f, 120.0f, 52.0f));
+		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		color = glm::vec3(0.47f, 0.47f, 0.47f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		sp.render(); //Renderiza esfera
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(34.0f, 142.0f, 40.0f));
+		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		color = glm::vec3(0.47f, 0.47f, 0.47f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		sp.render(); //Renderiza esfera
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(44.0f, 170.0f, 54.0f));
+		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		color = glm::vec3(0.47f, 0.47f, 0.47f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		sp.render(); //Renderiza esfera
+
+		//-------------
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(44.0f, 120.0f, 22.0f));
+		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		color = glm::vec3(0.47f, 0.47f, 0.47f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		sp.render(); //Renderiza esfera
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(40.0f, 86.0f, 20.0f));
+		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		color = glm::vec3(0.47f, 0.47f, 0.47f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		sp.render(); //Renderiza esfera
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(50.0f, 99.0f, 12.0f));
+		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		color = glm::vec3(0.47f, 0.47f, 0.47f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		sp.render(); //Renderiza esfera
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(60.0f, 126.0f, 7.0f));
+		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		color = glm::vec3(0.47f, 0.47f, 0.47f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		sp.render(); //Renderiza esfera
+
+		//-------------
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(34.0f, 111.0f, 34.0f));
+		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		color = glm::vec3(0.47f, 0.47f, 0.47f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		sp.render(); //Renderiza esfera
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(44.0f, 165.0f, 30.0f));
+		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		color = glm::vec3(0.47f, 0.47f, 0.47f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		sp.render(); //Renderiza esfera
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(89.0f, 150.0f, 12.0f));
+		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		color = glm::vec3(0.47f, 0.47f, 0.47f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		sp.render(); //Renderiza esfera
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(94.0f, 174.0f, 57.0f));
+		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		color = glm::vec3(0.47f, 0.47f, 0.47f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		sp.render(); //Renderiza esfera
+
+		//-------------
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(48.0f, 148.0f, 16.0f));
+		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		color = glm::vec3(0.47f, 0.47f, 0.47f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		sp.render(); //Renderiza esfera
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(85.0f, 105.0f, 6.0f));
+		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		color = glm::vec3(0.47f, 0.47f, 0.47f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		sp.render(); //Renderiza esfera
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(104.0f, 46.0f, 21.0f));
+		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		color = glm::vec3(0.47f, 0.47f, 0.47f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		sp.render(); //Renderiza esfera
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(109.0f, 78.0f, 41.0f));
+		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		color = glm::vec3(0.47f, 0.47f, 0.47f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		sp.render(); //Renderiza esfera
+
+		//-------------
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(108.0f, 114.0f, 28.0f));
+		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		color = glm::vec3(0.47f, 0.47f, 0.47f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		sp.render(); //Renderiza esfera
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(110.0f, 126.0f, 57.0f));
+		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		color = glm::vec3(0.47f, 0.47f, 0.47f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		sp.render(); //Renderiza esfera
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(97.0f, 140.0f, 69.0f));
+		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		color = glm::vec3(0.47f, 0.47f, 0.47f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		sp.render(); //Renderiza esfera
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(88.0f, 102.0f, 78.0f));
+		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		color = glm::vec3(0.47f, 0.47f, 0.47f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		sp.render(); //Renderiza esfera
+
+		//-------------
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(103.0f, 91.0f, 62.0f));
+		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		color = glm::vec3(0.47f, 0.47f, 0.47f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		sp.render(); //Renderiza esfera
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(84.0f, 14.0f, 83.0f));
+		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		color = glm::vec3(0.47f, 0.47f, 0.47f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		sp.render(); //Renderiza esfera
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(108.0f, 150.0f, 37.0f));
+		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		color = glm::vec3(0.47f, 0.47f, 0.47f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		sp.render(); //Renderiza esfera
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(53.0f, 59.0f, 86.0f));
+		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		color = glm::vec3(0.47f, 0.47f, 0.47f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		sp.render(); //Renderiza esfera
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(76.0f, 153.0f, 83.0f));
+		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		color = glm::vec3(0.47f, 0.47f, 0.47f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		sp.render(); //Renderiza esfera
+
+		//-------------
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(63.0f, 93.0f, 89.0f));
+		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		color = glm::vec3(0.47f, 0.47f, 0.47f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		sp.render(); //Renderiza esfera
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(86.0f, 117.0f, 114.0f));
+		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		color = glm::vec3(0.47f, 0.47f, 0.47f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		sp.render(); //Renderiza esfera
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(64.0f, 123.0f, 121.0f));
+		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		color = glm::vec3(0.47f, 0.47f, 0.47f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		sp.render(); //Renderiza esfera
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(85.0f, 107.0f, 104.0f));
+		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
+		color = glm::vec3(0.47f, 0.47f, 0.47f);
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		sp.render(); //Renderiza esfera
+
 
 		//PIEDRA NIEVE
 		model = glm::mat4(1.0);

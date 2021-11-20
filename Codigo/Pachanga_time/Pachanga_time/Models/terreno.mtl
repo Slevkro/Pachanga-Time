@@ -10,6 +10,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Versiones\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\base-cafe-fuerte.tga
 
 newmtl Material.011
 Ns 76.428356
@@ -20,6 +21,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Versiones\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\base-cafe-arbol.tga
 
 newmtl Material.013
 Ns 100.614440
@@ -30,6 +32,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Versiones\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\base-cafe-arbol.tga
 
 newmtl Material.014
 Ns 668.682475
@@ -50,16 +53,18 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Versiones\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\base-rojo-bote.tga
 
 newmtl Material.017
 Ns 500.057380
 Ka 1.000000 1.000000 1.000000
-Kd 0.042139 0.174736 0.269737
+Kd 0.042311 0.174648 0.270498
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Versiones\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\base-azul-ventana.tga
 
 newmtl Material.018
 Ns 61.185042
@@ -70,47 +75,51 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\REPO\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\base-piso.tga
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Versiones\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\base-piso.tga
 
 newmtl Material.026
 Ns 225.000000
 Ka 1.000000 1.000000 1.000000
-Kd 0.092853 0.085076 0.074831
+Kd 0.285648 0.384376 0.063891
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Versiones\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\base-cafe-arbol.tga
 
 newmtl Material.027
 Ns 348.979066
 Ka 1.000000 1.000000 1.000000
-Kd 0.013968 0.013968 0.013968
+Kd 0.345096 0.024716 0.117024
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Versiones\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\base-piso.tga
 
 newmtl Material.028
 Ns 45.128739
 Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.602015 0.241969
+Kd 0.800000 0.082194 0.747874
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Versiones\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\base-clouds.tga
 
 newmtl Material.031
 Ns 31.511347
 Ka 1.000000 1.000000 1.000000
-Kd 0.000000 0.000000 0.000000
+Kd 0.706434 0.315631 0.172374
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Versiones\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\base-cafe-fuerte.tga
 
 newmtl Material.035
 Ns 136.588681
@@ -121,27 +130,29 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\REPO\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\base-piedras.tga
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Versiones\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\base-piedras.tga
 
 newmtl Material.036
 Ns 115.925523
 Ka 1.000000 1.000000 1.000000
-Kd 0.196742 0.144333 0.471952
+Kd 0.198069 0.144129 0.473532
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Versiones\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\base-sillon.tga
 
 newmtl Material.037
 Ns 86.387327
 Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.749656 0.310499
+Kd 0.800000 0.000000 0.557102
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Versiones\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\shuba-yellow.tga
 
 newmtl Material.038
 Ns 79.680275
@@ -152,6 +163,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Versiones\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\base-cafe-fuerte.tga
 
 newmtl Material.039
 Ns 89.842491
@@ -162,6 +174,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Versiones\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\base-cafe-fuerte.tga
 
 newmtl Material.040
 Ns 40.318608
@@ -172,7 +185,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\REPO\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\snow.tga
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Versiones\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\snow.tga
 
 newmtl Material.041
 Ns 119.922635
@@ -183,17 +196,18 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\REPO\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\base-piedras.tga
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Versiones\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\base-piedras.tga
 
 newmtl Material.042
 Ns 76.428356
 Ka 1.000000 1.000000 1.000000
-Kd 0.133616 0.057119 0.040236
+Kd 0.132868 0.057805 0.039546
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Versiones\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\base-cafe-fuerte.tga
 
 newmtl Material.043
 Ns 64.098192
@@ -214,16 +228,18 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 3
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Versiones\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\base-cafe-fuerte.tga
 
 newmtl TRUBA
 Ns 119.922635
 Ka 0.343558 0.343558 0.343558
-Kd 0.187816 0.081511 0.032866
+Kd 0.187821 0.082283 0.033105
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 3
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Versiones\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\base-cafe-arbol.tga
 
 newmtl WOOD_GREY
 Ns 225.000000
@@ -234,6 +250,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Versiones\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\snow.tga
 
 newmtl boat1
 Ns 203.456086
@@ -248,32 +265,35 @@ illum 2
 newmtl boat2
 Ns 31.511347
 Ka 1.000000 1.000000 1.000000
-Kd 0.742664 0.007463 0.085409
+Kd 0.745404 0.007499 0.084376
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Versiones\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\base-rojo-bote.tga
 
 newmtl floor1
 Ns 225.000000
 Ka 1.000000 1.000000 1.000000
-Kd 0.141260 0.125013 0.103445
+Kd 0.461442 0.510478 0.009201
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Versiones\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\base-cafe-fuerte.tga
 
 newmtl green_tree
 Ns 168.362554
 Ka 1.000000 1.000000 1.000000
-Kd 0.154682 0.383170 0.117048
+Kd 0.155927 0.381326 0.116971
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Versiones\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\base-verde-arbol.tga
 
 newmtl metal2
 Ns 70.127792
@@ -284,6 +304,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 3
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Versiones\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\bernie-black.tga
 
 newmtl purpve
 Ns 58.339612
@@ -294,16 +315,18 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Versiones\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\base-sillon.tga
 
 newmtl scull
 Ns 247.627856
 Ka 1.000000 1.000000 1.000000
-Kd 0.580520 0.546773 0.332798
+Kd 0.580521 0.360747 0.382087
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Versiones\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\shuba-yellow.tga
 
 newmtl stone_gray
 Ns 225.000000
@@ -314,27 +337,29 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\REPO\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\base-entrada.tga
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Versiones\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\base-entrada.tga
 
 newmtl umbr1
 Ns 38.015165
 Ka 1.000000 1.000000 1.000000
-Kd 0.616586 0.400421 0.046796
+Kd 0.617207 0.401978 0.046665
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Versiones\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\base-umb-yellow.tga
 
 newmtl umbr2
 Ns 79.680275
 Ka 1.000000 1.000000 1.000000
-Kd 0.571702 0.173602 0.066825
+Kd 0.571125 0.174647 0.066626
 Ks 0.500000 0.500000 0.500000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Versiones\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\base-umb-ora.tga
 
 newmtl water
 Ns 668.682475
@@ -345,7 +370,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\REPO\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\base-piso.tga
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Versiones\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\base-piso.tga
 
 newmtl wood_house
 Ns 93.365370
@@ -356,3 +381,4 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
+map_Kd E:\\UNAM\\CompuGrafica\\PROYECTO-FINAL-LAB\\Versiones\\Pachanga-Time\\Codigo\\Pachanga_time\\Pachanga_time\\Textures\\base-cafe-arbol.tga
