@@ -185,6 +185,7 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 	{
 		theWindow->mueve_caminante = 0.0f;
 		theWindow->mueve_nubes = 0.0f;
+		theWindow->mueve_rei = 0.0f;
 	}
 
 	if (key == GLFW_KEY_Z)
@@ -215,6 +216,16 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 	{
 		theWindow->tipo_camara = 5;
 		theWindow->cameraFirstChange = true;
+	}
+
+	if (key == GLFW_KEY_K)
+	{
+		theWindow->mueve_munecos = 1.0;
+	}
+
+	if (key == GLFW_KEY_I)
+	{
+		theWindow->mueve_rei = 1.0;
 	}
 
 	if (key == GLFW_KEY_N)

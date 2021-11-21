@@ -27,6 +27,9 @@ public:
 	GLfloat getMueveRoca() { return mueve_roca; }
 	GLfloat getBaile() { return baile; }
 
+	GLfloat getMunecos() { return mueve_munecos; }
+	GLfloat getRei() { return mueve_rei; }
+
 	int getTipoCamara() { return tipo_camara; }
 	void setTipoCamara(int tipo) { tipo_camara = tipo; }
 	bool getCameraFirstChange() { return cameraFirstChange; }
@@ -55,6 +58,8 @@ private:
 	GLfloat mueve_nubes = 0.0f;
 	GLfloat mueve_roca = 0.0f;
 	GLfloat baile = 0.0f;
+	GLfloat mueve_munecos = 0.0f;
+	GLfloat mueve_rei = 0.0f;
 	int tipo_camara = 1;
 	bool mouseFirstMoved;
 	bool cameraFirstChange;

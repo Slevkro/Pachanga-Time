@@ -113,8 +113,8 @@ int nightLights = 0;
 bool dia;
 
 //Caminante del agua (Basica)
-float caminante_x = 0;
-float caminante_z = 0;
+float caminante_x = 0.0;
+float caminante_z = 0.0;
 float offset_caminante = 0.5;
 int num_recta = 1;
 float angulo_caminante = 0.0f;
@@ -124,6 +124,16 @@ float offset_angulo_caminante = 10.0f;
 bool x_ok = false;
 bool z_ok = false;
 bool angulo_ok = true;
+glm::vec3 knuckles_pos = glm::vec3(60.0f, 5.0f, 150.0f);
+float knuckles_x = 0.0;
+bool knuckles_x_ok = false;
+float knuckles_y = 0.0;
+bool knuckles_y_ok = false;
+float rota_knuckles_z = 0.0;
+bool rota_knuckles_z_ok = false;
+bool arriba_knuckes = true;
+float offset_knuckles = 0.3;
+float offset_rota_knuckles = 2.0;
 //Movimiento de las nubes (Compleja)
 float mueve_x_nubes = 0.0f;
 float mueve_z_nubes = 0.0f;
@@ -131,6 +141,21 @@ float rota_y_nubes = 0.0f;
 float offset_rota_nubes = 0.1;
 float offset_mueve_nubes = 5;
 float angulo_mueve_nubes = 10;
+//Movimiento de los muñecos (Basica)
+float mueve_x_munecos = 0.0f;
+float mueve_z_munecos = 0.0f;
+float rota_y_munecos = 0.0f;
+float rota_z_munecos = 0.0f;
+float offset_rota_munecos = 1.0;
+float offset_mueve_munecos = 0.3;
+int pasos = 0;
+bool inicio_munecos = false;
+bool adelante_munecos = true;
+bool derecha_munecos = true;
+bool angulo_z_munecos_ok = false;
+bool angulo_y_munecos_ok = false;
+
+//float angulo_mueve_nubes = 10;
 //Marceline (Extra)
 float offset_mueve_marceline = 5;
 float mueve_marceline = 0.0;
@@ -151,6 +176,41 @@ bool termina_animacion_roca = false;
 double tiempo_animacion;
 double start_animacion;
 float velocidad = 0.0;
+//Rei chiquita
+float mueve_x_rei = 0.0f;
+float mueve_z_rei = 0.0f;
+float mueve_y_rei = 0.0f;
+float num_lem_rei = 0.0f;
+float den_lem_rei = 0.0f;
+float rota_y_rei = 0.0f;
+float rota_z_rei = 0.0f;
+float rota_x_rei = 0.0f;
+float offset_rota_rei = 1.0;
+float offset_mueve_rei = 0.3;
+float angulo_lemn = 0.0f;
+bool inicio_rei = false;
+bool angulo_z_rei_ok = false;
+bool angulo_y_rei_ok = false;
+bool angulo_x_rei_ok = false;
+//Shubba duck
+float mueve_x_shubba = 0.0f;
+float mueve_z_shubba = 0.0f;
+float mueve_y_shubba = 0.0f;
+
+float rota_z_shubba = 0.0f;
+float rota_x_shubba = 0.0f;
+float rota_y_shubba = 0.0f;
+
+float offset_rota_shubba = 1.0;
+float offset_mueve_shubba = 0.3;
+float angulo_shuba = 0.0f;
+bool angulo_z_shuba_ok = false;
+bool angulo_x_shuba_ok = false;
+bool angulo_y_shuba_ok = false;
+//bool adelante_munecos = true;
+//bool derecha_munecos = true;
+
+
 //Camara
 bool primer_cambio_camara = true;
 bool inicio_entrada = true;
@@ -693,6 +753,51 @@ int main()
 
 		//Animacion basica para el caminante del agua
 		if (mainWindow.getMueveCaminante() == 1.0f) {
+			//Knuckles
+			knuckles_pos = glm::vec3(-116.0f, -2.0f, -6.0f);
+			if (num_recta >= 2 and num_recta <= 4) {
+				if (knuckles_x > -20) {
+					knuckles_x -= offset_knuckles * deltaTime;
+				}
+				else {
+					knuckles_x_ok = true;
+				}
+
+				if (rota_knuckles_z > 130) {
+					rota_knuckles_z_ok = true;
+					knuckles_x_ok = false;
+				}
+
+				if (knuckles_x_ok) {
+					rota_knuckles_z += offset_rota_knuckles * deltaTime;
+				}
+
+				if (knuckles_y > -11 and rota_knuckles_z_ok) {
+					knuckles_y -= offset_knuckles * deltaTime;
+				}
+				else {
+					knuckles_y_ok = true;
+				}
+
+				//if (knuckles_y_ok) {
+				//	printf("T-T");
+				//	//if (arriba_knuckes) {
+				//	//	knuckles_y += offset_knuckles * deltaTime;
+				//	//	if (knuckles_y < -8) {
+				//	//		arriba_knuckes = false;
+				//	//	}
+				//	//}
+				//	//else  {
+				//	//	knuckles_y -= offset_knuckles * deltaTime;
+				//	//	if (knuckles_y < -12) {
+				//	//		arriba_knuckes = true;
+				//	//	}
+				//	//}
+				//}
+			}
+			
+			
+			//Diosito
 			switch (num_recta)
 			{
 			case 1:
@@ -776,6 +881,16 @@ int main()
 				limite_angulo_der = 0.0f;
 				offset_caminante = 0.5f;
 				mainWindow.setMueveCaminante(0.0f);
+				knuckles_pos = glm::vec3(60.0f, 5.0f, 150.0f);
+				knuckles_x = 0.0;
+				knuckles_x_ok = false;
+				knuckles_y = 0.0;
+				knuckles_y_ok = false;
+				rota_knuckles_z = 0.0;
+				rota_knuckles_z_ok = false;
+				arriba_knuckes = true;
+				offset_knuckles = 0.3;
+				offset_rota_knuckles = 2.0;
 				break;
 			default:
 				break;
@@ -794,6 +909,147 @@ int main()
 				}
 			}
 		}
+
+		//Animacion en los muñecos de nieve
+		if (mainWindow.getMunecos() == 1) {
+			inicio_munecos = true;
+			//Movimiento
+			if (adelante_munecos) {
+				if (mueve_x_munecos < 3) {
+					mueve_x_munecos += offset_mueve_munecos * deltaTime;
+				}
+				else {
+					adelante_munecos = false;
+				}
+			}
+			else {
+				if (mueve_x_munecos > -3) {
+					mueve_x_munecos -= offset_mueve_munecos * deltaTime;
+				}
+				else {
+					adelante_munecos = true;
+				}
+			}
+			
+			if (pasos < 4) {
+				//Rotacion
+				if (angulo_z_munecos_ok) {
+					rota_z_munecos += offset_rota_munecos * deltaTime;
+					if (rota_z_munecos > 30) {
+						angulo_z_munecos_ok = false;
+						pasos += 1;
+					}
+				}
+				else {
+					rota_z_munecos -= offset_rota_munecos * deltaTime;
+					if (rota_z_munecos < -5) {
+						angulo_z_munecos_ok = true;
+					}
+				}
+			}
+			else {
+				//Giro completo
+				if (pasos == 4) {
+					rota_y_munecos += offset_rota_munecos * 2 * deltaTime;
+					if (rota_y_munecos > 360) {
+						rota_y_munecos = 0;
+						pasos = 0;
+					}
+				}
+			}
+		}
+
+		//Animacion compleja para rei
+		if (mainWindow.getRei() == 1.0f) {
+			rota_y_rei += offset_rota_rei * 10 * deltaTime;
+			if (angulo_z_rei_ok) {
+				rota_z_rei += offset_rota_rei * deltaTime;
+				if (rota_z_rei > 35) {
+					angulo_z_rei_ok = false;
+				}
+			}
+			else {
+				rota_z_rei -= offset_rota_rei * deltaTime;
+				if (rota_z_rei < -35) {
+					angulo_z_rei_ok = true;
+				}
+			}
+
+			if (angulo_x_rei_ok) {
+				rota_x_rei += offset_rota_rei * deltaTime;
+				if (rota_x_rei > 60) {
+					angulo_x_rei_ok = false;
+				}
+			}
+			else {
+				rota_x_rei -= offset_rota_rei * deltaTime;
+				if (rota_x_rei < -60) {
+					angulo_x_rei_ok = true;
+				}
+			}
+
+			num_lem_rei = 15 * sqrt(2) * cos(angulo_lemn);
+			den_lem_rei = pow(sin(angulo_lemn), 2) + 1;
+			mueve_x_rei = num_lem_rei / den_lem_rei;
+
+			num_lem_rei = 15 * sqrt(2) * cos(angulo_lemn) * sin(angulo_lemn);
+			mueve_z_rei = (num_lem_rei / den_lem_rei);
+
+			//angulo_lemn += 0.01;
+
+			angulo_lemn += 0.01 * deltaTime;
+
+		}
+
+		//Animacion para shubba
+		if (mainWindow.getRei() == 1.0f) {
+
+			mueve_x_shubba = 20 * sin(angulo_shuba * toRadians);
+			mueve_z_shubba = 5 * cos(angulo_shuba * toRadians);
+			angulo_shuba += 1.5 * deltaTime;
+			
+			if (angulo_z_shuba_ok) {
+				rota_z_shubba += 5 * deltaTime;
+				if (rota_z_shubba > 35) {
+					angulo_z_shuba_ok = false;
+				}
+			}
+			else {
+				rota_z_shubba -= 5 * deltaTime;
+				if (rota_z_shubba < -35) {
+					angulo_z_shuba_ok = true;
+				}
+			}
+
+			if (angulo_x_shuba_ok) {
+				rota_x_shubba += 3 * deltaTime;
+				if (rota_x_shubba > 50) {
+					angulo_x_shuba_ok = false;
+				}
+			}
+			else {
+				rota_x_shubba -= 3 * deltaTime;
+				if (rota_x_shubba < -50) {
+					angulo_x_shuba_ok = true;
+				}
+			}
+
+			//if (angulo_y_shuba_ok) {
+				rota_y_shubba += 1 * deltaTime;
+			//	if (rota_y_shubba > 35) {
+			//		angulo_y_shuba_ok = false;
+			//	}
+			//}
+			//else {
+			//	rota_y_shubba -= 1 * deltaTime;
+			//	if (rota_y_shubba < -35) {
+			//		angulo_y_shuba_ok = true;
+			//	}
+			//}
+		
+		}
+
+
 
 		//Animacion compleja para el movimiento de las nubes
 		if (mainWindow.getMueveNubes() == 1.0) {
@@ -852,6 +1108,8 @@ int main()
 			
 			
 		}
+
+		
 		
 		//Cambio de camaras ligadas al piso y camaras aereas.
 
@@ -1157,9 +1415,10 @@ int main()
 
 		//Knucles
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(60.0f, 5.0f, 150.0f));
+		model = glm::translate(model, glm::vec3(knuckles_pos.x + knuckles_x, knuckles_pos.y + knuckles_y, knuckles_pos.z) );
 		model = glm::scale(model, glm::vec3(4.0f, 4.0f, 4.0f));
 		model = glm::rotate(model, 140 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, rota_knuckles_z * toRadians, glm::vec3(-1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Knuckles.RenderModel();
 
@@ -1182,18 +1441,24 @@ int main()
 
 		//Rei
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-26.0f, 5.0f, 80.0f));
+		model = glm::translate(model, glm::vec3(0.0f + mueve_x_rei, 17.0f + mueve_z_rei, 80.0f));
 		model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
-		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f)); 
+		model = glm::rotate(model, rota_z_rei * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::rotate(model, rota_y_rei * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, rota_x_rei * toRadians, glm::vec3(1.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Rei.RenderModel();
 
 		//Shuba
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(20.0f, 8.0f, 138.0f));
+		model = glm::translate(model, glm::vec3(5.0f + mueve_x_shubba, 8.0f, 130.0f + mueve_z_shubba));
 		model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));
 		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, rota_z_shubba * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, rota_x_shubba * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		//model = glm::rotate(model, rota_y_shubba * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Shuba.RenderModel();
 
@@ -1241,43 +1506,44 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Bang_Girl.RenderModel();
 
-		//Hombres de nieve
+		//Hombres de nieve //Bernie
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-20.0f, 2.0f, -200.0f));
+		model = glm::translate(model, glm::vec3(-20.0f, 4.0f + mueve_x_munecos, -200.0f));
 		model = glm::scale(model, glm::vec3(35.0f, 35.0f, 35.0f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::rotate(model, 10 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
-		model = glm::rotate(model, 15 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, rota_z_munecos * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, rota_y_munecos * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Snowman.RenderModel();
 
-		//Hombres de nieve
+		//Hombres de nieve Entrada
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-60.0f, -92.0f, 345.0f));
+		model = glm::translate(model, glm::vec3(-60.0f + mueve_x_munecos, -92.0f, 345.0f));
 		model = glm::scale(model, glm::vec3(35.0f, 35.0f, 35.0f));
-		//model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		model = glm::rotate(model, 10 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
-		model = glm::rotate(model, 15 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, rota_z_munecos * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, rota_y_munecos * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Snowman.RenderModel();
 
 		//Hombres de nieve
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(150.0f, -103.0f, 310.0f));
+		model = glm::translate(model, glm::vec3(150.0f, -103.0f, 310.0f + mueve_x_munecos));
 		model = glm::scale(model, glm::vec3(35.0f, 35.0f, 35.0f));
 		model = glm::rotate(model, 115 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		//model = glm::rotate(model, 10 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
-		//model = glm::rotate(model, 15 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, rota_z_munecos * toRadians, glm::vec3(1.0f, 0.0f, 1.0f));
+		model = glm::rotate(model, rota_y_munecos * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Snowman.RenderModel();
 
 		//Hombres de nieve
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(167.0f, 2.0f, 42.0f));
+		model = glm::translate(model, glm::vec3(167.0f, 2.0f + mueve_x_munecos, 42.0f));
 		model = glm::scale(model, glm::vec3(35.0f, 35.0f, 35.0f));
 		model = glm::rotate(model, 95 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		//model = glm::rotate(model, 10 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
-		//model = glm::rotate(model, 15 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, rota_z_munecos * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::rotate(model, rota_y_munecos * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Snowman.RenderModel();
 
