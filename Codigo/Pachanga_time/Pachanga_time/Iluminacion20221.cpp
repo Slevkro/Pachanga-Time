@@ -75,6 +75,14 @@ Model Piedra;
 Model PiedraNieve;
 Model Nubes;
 
+//Jerarquia del avatar
+Model FinnCuerpo;
+Model FinnBrazoDerecho;
+Model FinnBrazoIzquierdo;
+Model FinnPiernaDerecha;
+Model FinnPiernaDerechaBa;
+Model FinnPiernaIzquierda;
+Model FinnPiernaIzquierdaBa;
 
 Model Jake;
 Model Finn;
@@ -85,6 +93,8 @@ Skybox skyboxDay;
 //materiales
 Material Material_brillante;
 Material Material_opaco;
+Material Material_finn;
+Material Material_neutro;
 
 //luz direccional
 DirectionalLight mainLight;
@@ -575,7 +585,28 @@ int main()
 	Shuba.LoadModel("Models/shuba-duck.obj");
 
 	Finn = Model();
-	Finn.LoadModel("Models/finn.obj");
+	Finn.LoadModel("Models/finn-cuerpo-jerarquia.obj");
+
+	FinnCuerpo = Model();
+	FinnCuerpo.LoadModel("Models/finn-cuerpo.obj");
+
+	FinnBrazoDerecho = Model();
+	FinnBrazoDerecho.LoadModel("Models/finn-brazo-derecho.obj");
+
+	FinnBrazoIzquierdo = Model();
+	FinnBrazoIzquierdo.LoadModel("Models/finn-brazo-izquierdo.obj");
+
+	FinnPiernaDerecha = Model();
+	FinnPiernaDerecha.LoadModel("Models/finn-pierna-derecha.obj");
+
+	FinnPiernaDerechaBa = Model();
+	FinnPiernaDerechaBa.LoadModel("Models/finn-pierna-derecha-ba.obj");
+
+	FinnPiernaIzquierda = Model();
+	FinnPiernaIzquierda.LoadModel("Models/finn-pierna-izquierda.obj");
+
+	FinnPiernaIzquierdaBa = Model();
+	FinnPiernaIzquierdaBa.LoadModel("Models/finn-pierna-izquierda-ba.obj");
 
 	std::vector<std::string> skyboxNightFaces;
 	std::vector<std::string> skyboxDayFaces;
@@ -606,7 +637,9 @@ int main()
 	skyboxDay = Skybox(skyboxDayFaces);
 
 	Material_brillante = Material(4.0f, 256);
-	Material_opaco = Material(1.0f, 40);
+	Material_opaco = Material(0.3f, 4);
+	Material_finn = Material(0.1f, 60); //Absorbe la luz y refleja un poco [Cartoon]
+	Material_neutro = Material(0.0f, 0); 
 
 	//posición inicial del helicóptero
 	glm::vec3 posblackhawk = glm::vec3(-20.0f, 6.0f, -1.0);
@@ -1402,16 +1435,19 @@ int main()
 		Among_Us.RenderModel();
 
 		//Finn
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(camera.getCameraPosition().x + 20.0f, camera.getCameraPosition().y - 30.0, camera.getCameraPosition().z));
-		//model = glm::translate(model, glm::vec3(-177.0f + 5.0, -65.0f - 30.0, 302.0f));
-		model = glm::scale(model, glm::vec3(4.5f, 4.5f, 4.5f));
-		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::rotate(model, rotacion_avatar_y, glm::vec3(0.0f, -1.0f, 0.0f));
-		//model = glm::rotate(model, rotacion_avatar_y, glm::vec3(0.0f, 1.0f, 0.0f));
-		//model = glm::rotate(model, rotacion_avatar_y, glm::vec3(0.0f, 1.0f, 0.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Finn.RenderModel();
+		//model = glm::mat4(1.0);
+		//model = glm::translate(model, glm::vec3(camera.getCameraPosition().x - 20.0f, camera.getCameraPosition().y - 30.0, camera.getCameraPosition().z));
+		////model = glm::translate(model, glm::vec3(-177.0f - 40.0f, -65.0f - 30.0, 302.0f));
+		//model = glm::scale(model, glm::vec3(4.5f, 4.5f, 4.5f));
+		////model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		//model = glm::rotate(model, -70 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		//model = glm::rotate(model, rotacion_avatar_y, glm::vec3(0.0f, -1.0f, 0.0f));
+		////model = glm::rotate(model, rotacion_avatar_y, glm::vec3(0.0f, 1.0f, 0.0f));
+		////model = glm::rotate(model, rotacion_avatar_y, glm::vec3(0.0f, 1.0f, 0.0f));
+		//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//Finn.RenderModel();
+
+		
 
 		//Knucles
 		model = glm::mat4(1.0);
@@ -1858,6 +1894,83 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		sp.render(); //Renderiza esfera
 
+		//Finn Jerarquia -------------------------------------
+
+		glm::mat4 matriz_cuerpo(1.0);
+		glm::mat4 matriz_pierna(1.0);
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(camera.getCameraPosition().x - 20.0f, camera.getCameraPosition().y - 30.0, camera.getCameraPosition().z));
+		//model = glm::translate(model, glm::vec3(0.0f, 30.0f, -15.0f));
+		model = glm::rotate(model, -70 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, rotacion_avatar_y, glm::vec3(0.0f, -1.0f, 0.0f));
+		matriz_cuerpo = model;
+		model = glm::scale(model, glm::vec3(4.5f, 4.5f, 4.5f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_finn.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		FinnCuerpo.RenderModel();
+
+		//model = glm::mat4(1.0);
+		model = matriz_cuerpo;
+		//model = glm::translate(model, glm::vec3(camera.getCameraPosition().x - 20.0f, camera.getCameraPosition().y - 30.0, camera.getCameraPosition().z));
+		model = glm::translate(model, glm::vec3(7.5f, 18.65f, -44.9f));
+		model = glm::scale(model, glm::vec3(4.5f, 4.5f, 4.5f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::rotate(model, mainWindow.getTest() * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		FinnBrazoDerecho.RenderModel();
+
+		//model = glm::mat4(1.0);
+		model = matriz_cuerpo;
+		//model = glm::translate(model, glm::vec3(camera.getCameraPosition().x - 20.0f, camera.getCameraPosition().y - 30.0, camera.getCameraPosition().z));
+		model = glm::translate(model, glm::vec3(-7.31f, 18.69f, -44.9f));
+		model = glm::scale(model, glm::vec3(4.5f, 4.5f, 4.5f));
+		//model = glm::rotate(model, -70 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		//model = glm::rotate(model, rotacion_avatar_y, glm::vec3(0.0f, -1.0f, 0.0f));
+		model = glm::rotate(model, mainWindow.getTest() * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		FinnBrazoIzquierdo.RenderModel();
+
+		model = matriz_cuerpo;
+		//model = glm::translate(model, glm::vec3(camera.getCameraPosition().x - 20.0f, camera.getCameraPosition().y - 30.0, camera.getCameraPosition().z));
+		model = glm::translate(model, glm::vec3(2.5f, 10.32f, -45.23f));
+		model = glm::rotate(model, mainWindow.getTest() * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		matriz_pierna = model;
+		model = glm::scale(model, glm::vec3(4.5f, 4.5f, 4.5f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		FinnPiernaDerecha.RenderModel();
+
+		model = matriz_pierna;
+		//model = glm::translate(model, glm::vec3(camera.getCameraPosition().x - 20.0f, camera.getCameraPosition().y - 30.0, camera.getCameraPosition().z));
+		model = glm::translate(model, glm::vec3(0.0f, -5.0f, 0.25f));
+		model = glm::scale(model, glm::vec3(4.5f, 4.5f, 4.5f));
+		//model = glm::rotate(model, -70 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		//model = glm::rotate(model, rotacion_avatar_y, glm::vec3(0.0f, -1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		FinnPiernaDerechaBa.RenderModel();
+
+
+		model = matriz_cuerpo;
+		//model = glm::translate(model, glm::vec3(camera.getCameraPosition().x - 20.0f, camera.getCameraPosition().y - 30.0, camera.getCameraPosition().z));
+		model = glm::translate(model, glm::vec3(-2.5f, 10.32f, -45.23f));
+		model = glm::rotate(model, mainWindow.getTest() * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		matriz_pierna = model;
+		//model = glm::rotate(model, -70 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		//model = glm::rotate(model, rotacion_avatar_y, glm::vec3(0.0f, -1.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(4.5f, 4.5f, 4.5f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		FinnPiernaIzquierda.RenderModel();
+
+		model = matriz_pierna;
+		//model = glm::translate(model, glm::vec3(camera.getCameraPosition().x - 20.0f, camera.getCameraPosition().y - 30.0, camera.getCameraPosition().z));
+		model = glm::translate(model, glm::vec3(0.0f, -5.0f, 0.0f));
+		//model = glm::rotate(model, -70 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		//model = glm::rotate(model, rotacion_avatar_y, glm::vec3(0.0f, -1.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(4.5f, 4.5f, 4.5f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		FinnPiernaIzquierdaBa.RenderModel();
+
+		
 
 		//PIEDRA NIEVE
 		model = glm::mat4(1.0);
@@ -1865,6 +1978,7 @@ int main()
 		model = glm::scale(model, glm::vec3(10.0f, 30.0f, 10.0f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Material_neutro.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		PiedraNieve.RenderModel();
 
 		//--------------------------------

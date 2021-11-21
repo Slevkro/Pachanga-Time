@@ -228,6 +228,11 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 		theWindow->mueve_rei = 1.0;
 	}
 
+	if (key == GLFW_KEY_U)
+	{
+		theWindow->test_jerarquia += 5.0;
+	}
+
 	if (key == GLFW_KEY_N)
 	{
 		if (action == GLFW_PRESS) {
