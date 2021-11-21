@@ -255,6 +255,13 @@ float rotacion_avatar_y = 0;
 glm::vec3 view_camara;
 glm::vec3 avatar = glm::vec3(1.0f, 0.0f, 0.0f);
 float numerador_angulo, denominador_angulo = 0.0f;
+float avatar_y = 0.0;
+float rota_avatar_brazos = 0.0f;
+bool angulo_z_avatar_ok = false;
+float rota_avatar_piernas = 0.0f;
+bool angulo_x_avatar_ok = false;
+float rota_avatar_pies = 0.0f;
+bool angulo_x_pies_ok = false;
 
 
 
@@ -1153,12 +1160,13 @@ int main()
 				camara_x_inicial = cam_entrada_anterior.x = -177.0f;
 				camara_z_inicial = cam_entrada_anterior.x = 302.0f;
 				inicio_entrada = false;
+				rota_avatar_brazos = 0.0f;
 			}
 			else {  //Se toma la anterior
 				camara_x_inicial = cam_entrada_anterior.x;
 				camara_z_inicial = cam_entrada_anterior.z;
 			}
-			nueva_y_camara = -65.0f;
+			nueva_y_camara = -55.0f;
 			break;
 
 		case 2: //Nieve
@@ -1166,6 +1174,7 @@ int main()
 				camara_x_inicial = cam_nieve_anterior.x = 116.0f;
 				camara_z_inicial = cam_nieve_anterior.x = 413.0f;
 				inicio_nieve = false;
+				rota_avatar_brazos = 0.0f;
 			}
 			else {  //Se toma la anterior
 				camara_x_inicial = cam_nieve_anterior.x;
@@ -1174,7 +1183,7 @@ int main()
 			//camara_x_inicial = 116.0f;
 			//nueva_y_camara = -85.0f;
 			//camara_z_inicial = 413.0f;
-			nueva_y_camara = -85.0f;
+			nueva_y_camara = -75.0f;
 			break;
 
 		case 3: //Arbol
@@ -1182,12 +1191,13 @@ int main()
 				camara_x_inicial = cam_arbol_anterior.x = 18.0f;
 				camara_z_inicial = cam_arbol_anterior.z = 186.0f;
 				inicio_arbol = false;
+				rota_avatar_brazos = 0.0f;
 			}
 			else {  //Se toma la anterior
 				camara_x_inicial = cam_arbol_anterior.x;
 				camara_z_inicial = cam_arbol_anterior.z;
 			}
-			nueva_y_camara = 20.0f;
+			nueva_y_camara = 35.0f;
 			break;
 
 		case 4: //Aerea
@@ -1196,6 +1206,7 @@ int main()
 				camara_x_inicial = cam_aerea_anterior.x = -187.0f;
 				camara_z_inicial = cam_aerea_anterior.z = 302.0f;
 				inicio_aerea = false;
+				rota_avatar_brazos = 0.0f;
 			}
 			else {  //Se toma la anterior
 				camara_x_inicial = cam_aerea_anterior.x;
@@ -1336,6 +1347,70 @@ int main()
 		//	* sqrt(pow(avatar.x, 2) + pow(avatar.z, 2));
 		rotacion_avatar_y = camera.getCameraDirection().z;
 		//printf("Rotacion Avatar: %f\n", rotacion_avatar_y);
+
+		if (mainWindow.getMueveW() || mainWindow.getMueveS()) { //Mueve los brazos
+
+			if (mainWindow.getTipoCamara() != 5) { //Esta sobre algun plano
+				//Brazos
+				if (angulo_z_avatar_ok) {
+					rota_avatar_brazos += 4.5 * deltaTime;
+					if (rota_avatar_brazos > 75) {
+						angulo_z_avatar_ok = false;
+					}
+				}
+				else {
+					rota_avatar_brazos -= 4.5 * deltaTime;
+					if (rota_avatar_brazos < -75) {
+						angulo_z_avatar_ok = true;
+					}
+				}
+
+				//Piernas
+				if (angulo_x_avatar_ok) {
+					rota_avatar_piernas += 2.5 * deltaTime;
+					if (rota_avatar_piernas > 30) {
+						angulo_x_avatar_ok = false;
+					}
+				}
+				else {
+					rota_avatar_piernas -= 2.5 * deltaTime;
+					if (rota_avatar_piernas < -30) {
+						angulo_x_avatar_ok = true;
+					}
+				}
+
+				//Pies
+				if (angulo_x_pies_ok) {
+					rota_avatar_pies += 2.5 * deltaTime;
+					if (rota_avatar_pies > 0) {
+						angulo_x_pies_ok = false;
+					}
+				}
+				else {
+					rota_avatar_pies -= 2.5 * deltaTime;
+					if (rota_avatar_pies < -25) {
+						angulo_x_pies_ok = true;
+					}
+				}
+
+			}
+			else { //Si esta volando
+				if (angulo_z_avatar_ok) {
+					rota_avatar_brazos += 3 * deltaTime;
+					if (rota_avatar_brazos > 30) {
+						angulo_z_avatar_ok = false;
+					}
+				}
+				else {
+					rota_avatar_brazos -= 3 * deltaTime;
+					if (rota_avatar_brazos < -30) {
+						angulo_z_avatar_ok = true;
+					}
+				}
+			}
+
+			
+		}
 
 		shaderList[0].UseShader();
 		uniformModel = shaderList[0].GetModelLocation();
@@ -1898,7 +1973,7 @@ int main()
 
 		glm::mat4 matriz_cuerpo(1.0);
 		glm::mat4 matriz_pierna(1.0);
-
+		//CUERPO
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(camera.getCameraPosition().x - 20.0f, camera.getCameraPosition().y - 30.0, camera.getCameraPosition().z));
 		//model = glm::translate(model, glm::vec3(0.0f, 30.0f, -15.0f));
@@ -1909,63 +1984,61 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Material_finn.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		FinnCuerpo.RenderModel();
-
-		//model = glm::mat4(1.0);
+		//BRAZO DERECHO
 		model = matriz_cuerpo;
-		//model = glm::translate(model, glm::vec3(camera.getCameraPosition().x - 20.0f, camera.getCameraPosition().y - 30.0, camera.getCameraPosition().z));
 		model = glm::translate(model, glm::vec3(7.5f, 18.65f, -44.9f));
 		model = glm::scale(model, glm::vec3(4.5f, 4.5f, 4.5f));
-		//model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
-		model = glm::rotate(model, mainWindow.getTest() * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		if (mainWindow.getTipoCamara() != 5) {
+			model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		}
+		model = glm::rotate(model, rota_avatar_brazos * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		FinnBrazoDerecho.RenderModel();
-
-		//model = glm::mat4(1.0);
+		//BRAZO IZQUIERDO
 		model = matriz_cuerpo;
-		//model = glm::translate(model, glm::vec3(camera.getCameraPosition().x - 20.0f, camera.getCameraPosition().y - 30.0, camera.getCameraPosition().z));
 		model = glm::translate(model, glm::vec3(-7.31f, 18.69f, -44.9f));
 		model = glm::scale(model, glm::vec3(4.5f, 4.5f, 4.5f));
-		//model = glm::rotate(model, -70 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		//model = glm::rotate(model, rotacion_avatar_y, glm::vec3(0.0f, -1.0f, 0.0f));
-		model = glm::rotate(model, mainWindow.getTest() * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		if (mainWindow.getTipoCamara() != 5) {
+			model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		}
+		model = glm::rotate(model, rota_avatar_brazos * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		FinnBrazoIzquierdo.RenderModel();
-
+		//BRAZO PIERNA DERECHA
 		model = matriz_cuerpo;
-		//model = glm::translate(model, glm::vec3(camera.getCameraPosition().x - 20.0f, camera.getCameraPosition().y - 30.0, camera.getCameraPosition().z));
-		model = glm::translate(model, glm::vec3(2.5f, 10.32f, -45.23f));
-		model = glm::rotate(model, mainWindow.getTest() * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::translate(model, glm::vec3(2.5f, 10.92f, -45.23f));
+		model = glm::rotate(model, rota_avatar_piernas * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		matriz_pierna = model;
 		model = glm::scale(model, glm::vec3(4.5f, 4.5f, 4.5f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		FinnPiernaDerecha.RenderModel();
-
+		//PIE DERECHO
 		model = matriz_pierna;
 		//model = glm::translate(model, glm::vec3(camera.getCameraPosition().x - 20.0f, camera.getCameraPosition().y - 30.0, camera.getCameraPosition().z));
 		model = glm::translate(model, glm::vec3(0.0f, -5.0f, 0.25f));
 		model = glm::scale(model, glm::vec3(4.5f, 4.5f, 4.5f));
+		model = glm::rotate(model, rota_avatar_pies * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		//model = glm::rotate(model, -70 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		//model = glm::rotate(model, rotacion_avatar_y, glm::vec3(0.0f, -1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		FinnPiernaDerechaBa.RenderModel();
 
-
+		//PIERNA IZQUIERDA
 		model = matriz_cuerpo;
 		//model = glm::translate(model, glm::vec3(camera.getCameraPosition().x - 20.0f, camera.getCameraPosition().y - 30.0, camera.getCameraPosition().z));
-		model = glm::translate(model, glm::vec3(-2.5f, 10.32f, -45.23f));
-		model = glm::rotate(model, mainWindow.getTest() * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::translate(model, glm::vec3(-2.5f, 10.92f, -45.23f));
+		model = glm::rotate(model, rota_avatar_piernas * toRadians, glm::vec3(-1.0f, 0.0f, 0.0f));
 		matriz_pierna = model;
 		//model = glm::rotate(model, -70 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		//model = glm::rotate(model, rotacion_avatar_y, glm::vec3(0.0f, -1.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(4.5f, 4.5f, 4.5f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		FinnPiernaIzquierda.RenderModel();
-
+		//PIE IZQUIERDO
 		model = matriz_pierna;
 		//model = glm::translate(model, glm::vec3(camera.getCameraPosition().x - 20.0f, camera.getCameraPosition().y - 30.0, camera.getCameraPosition().z));
 		model = glm::translate(model, glm::vec3(0.0f, -5.0f, 0.0f));
-		//model = glm::rotate(model, -70 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		//model = glm::rotate(model, rotacion_avatar_y, glm::vec3(0.0f, -1.0f, 0.0f));
+		model = glm::rotate(model, rota_avatar_pies * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));;
 		model = glm::scale(model, glm::vec3(4.5f, 4.5f, 4.5f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		FinnPiernaIzquierdaBa.RenderModel();
