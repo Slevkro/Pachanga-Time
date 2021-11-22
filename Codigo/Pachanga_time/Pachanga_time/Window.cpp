@@ -106,54 +106,6 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 	{
 		glfwSetWindowShouldClose(window, GL_TRUE);
 	}
-	//AUTO
-	//if (key == GLFW_KEY_Y)
-	//{
-	//	theWindow-> muevex += 1.0;
-	//	theWindow->mueve_llanta += 2.0;
-	//}
-	//if (key == GLFW_KEY_U)
-	//{
-	//	theWindow-> muevex -= 1.0;
-	//	theWindow->mueve_llanta -= 2.0;
-	//}
-
-	//if (key == GLFW_KEY_I)
-	//{
-	//	theWindow->muevez += 1.0;
-	//	theWindow->mueve_llanta += 2.0;
-	//}
-
-	//if (key == GLFW_KEY_O)
-	//{
-	//	theWindow->muevez -= 1.0;
-	//	theWindow->mueve_llanta -= 2.0;
-	//}
-
-	//HELICOPTERO
-	if (key == GLFW_KEY_F)
-	{
-		theWindow->mueve_y_pos_chopper += 1.0;
-		theWindow->mueve_helices += 5.0;
-	}
-
-	if (key == GLFW_KEY_V)
-	{
-		theWindow->mueve_y_pos_chopper -= 1.0;
-		theWindow->mueve_helices -= 5.0;
-	}
-
-	if (key == GLFW_KEY_B)
-	{
-		theWindow->mueve_x_pos_chopper += 1.0;
-		theWindow->mueve_helices += 5.0;
-	}
-
-	if (key == GLFW_KEY_D)
-	{
-		theWindow->mueve_x_pos_chopper -= 1.0;
-		theWindow->mueve_helices -= 5.0;
-	}
 
 	//Encender y apagar luz puntual
 	if (key == GLFW_KEY_P)
@@ -186,6 +138,7 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 		theWindow->mueve_caminante = 0.0f;
 		theWindow->mueve_nubes = 0.0f;
 		theWindow->mueve_rei = 0.0f;
+		theWindow->mueve_munecos = 0.0f;
 	}
 
 	if (key == GLFW_KEY_Z)
@@ -231,6 +184,47 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 	if (key == GLFW_KEY_U)
 	{
 		theWindow->test_jerarquia += 5.0;
+	}
+
+	//Avatar
+	if (key == GLFW_KEY_W)
+	{
+		if (action == GLFW_PRESS) {
+			theWindow->mueve_w = true;
+		}
+		else if (action == GLFW_RELEASE) {
+			theWindow->mueve_w = false;
+		}
+	}
+
+	if (key == GLFW_KEY_S)
+	{
+		if (action == GLFW_PRESS) {
+			theWindow->mueve_s = true;
+		}
+		else if (action == GLFW_RELEASE) {
+			theWindow->mueve_s = false;
+		}
+	}
+
+	if (key == GLFW_KEY_A)
+	{
+		if (action == GLFW_PRESS) {
+			theWindow->mueve_a = true;
+		}
+		else if (action == GLFW_RELEASE) {
+			theWindow->mueve_a = false;
+		}
+	}
+
+	if (key == GLFW_KEY_D)
+	{
+		if (action == GLFW_PRESS) {
+			theWindow->mueve_d = true;
+		}
+		else if (action == GLFW_RELEASE) {
+			theWindow->mueve_d = false;
+		}
 	}
 
 	if (key == GLFW_KEY_N)

@@ -30,6 +30,11 @@ public:
 	GLfloat getMunecos() { return mueve_munecos; }
 	GLfloat getRei() { return mueve_rei; }
 
+	bool getMueveW() { return mueve_w; }
+	bool getMueveS() { return mueve_s; }
+	bool getMueveD() { return mueve_d; }
+	bool getMueveA() { return mueve_a; }
+
 	GLfloat getTest() { return test_jerarquia; }
 
 	int getTipoCamara() { return tipo_camara; }
@@ -63,6 +68,10 @@ private:
 	GLfloat mueve_munecos = 0.0f;
 	GLfloat mueve_rei = 0.0f;
 	GLfloat test_jerarquia = 0.0f;
+	bool mueve_w = false;
+	bool mueve_s = false;
+	bool mueve_a = false;
+	bool mueve_d = false;
 	int tipo_camara = 1;
 	bool mouseFirstMoved;
 	bool cameraFirstChange;

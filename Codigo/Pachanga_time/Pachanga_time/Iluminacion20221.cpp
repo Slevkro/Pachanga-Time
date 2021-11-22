@@ -753,13 +753,9 @@ int main()
 		//Recibir eventos del usuario
 		glfwPollEvents();
 		camera.keyControl(mainWindow.getsKeys(), deltaTime);
-		if (mainWindow.getTipoCamara() != 4) {
+		//if (mainWindow.getTipoCamara() != 4) {
 		camera.mouseControl(mainWindow.getXChange(), mainWindow.getYChange());
-		}
-		//else { //Ahorrarse el set pos para que mire hacia abajo
-			//camera.mouseControl(0.0f, -90.0f);
 		//}
-		// Clear the window
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -767,10 +763,10 @@ int main()
 		//150 segundos = 1:30 min
 		if (duration <= 10) { //Dia
 			mainLight.setLight(glm::vec3(1.0f, 1.0f, 1.0f));
-			if (mainWindow.getTipoCamara() != 4) {
+			if (mainWindow.getTipoCamara() != 4) { 
 				skyboxDay.DrawSkybox(camera.calculateViewMatrix(false), projection);
 			}
-			else {
+			else { //Camara aerea
 				skyboxDay.DrawSkybox(camera.calculateViewMatrix(true), projection);
 			}
 			dia = true;
@@ -778,10 +774,10 @@ int main()
 		}
 		else { //Noche
 			mainLight.setLight(glm::vec3(0.3373f, 0.4902f, 0.6235f)); //Color de luz ambiental noche
-			if (mainWindow.getTipoCamara() != 4) {
+			if (mainWindow.getTipoCamara() != 4) { 
 				skyboxNight.DrawSkybox(camera.calculateViewMatrix(false), projection);
 			}
-			else {
+			else { //Camara aerea
 				skyboxNight.DrawSkybox(camera.calculateViewMatrix(true), projection);
 			}
 			dia = false;
@@ -1348,7 +1344,7 @@ int main()
 		rotacion_avatar_y = camera.getCameraDirection().z;
 		//printf("Rotacion Avatar: %f\n", rotacion_avatar_y);
 
-		if (mainWindow.getMueveW() || mainWindow.getMueveS()) { //Mueve los brazos
+		if (mainWindow.getMueveW() || mainWindow.getMueveS() || mainWindow.getMueveA() || mainWindow.getMueveD()) { 
 
 			if (mainWindow.getTipoCamara() != 5) { //Esta sobre algun plano
 				//Brazos
@@ -1491,7 +1487,6 @@ int main()
 		model = glm::scale(model, glm::vec3(10.0f, 10.0f, 10.0f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		//Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		Terreno_Base.RenderModel();
 
 		////Piedra Animada
