@@ -15,6 +15,8 @@ Cambios en el shader, en lugar de enviar la textura en el shader de fragmentos, 
 #include <glew.h>
 #include <glfw3.h>
 
+#include <irrklang\irrKlang.h>
+
 #include <glm.hpp>
 #include <gtc\matrix_transform.hpp>
 #include <gtc\type_ptr.hpp>
@@ -41,6 +43,8 @@ Cambios en el shader, en lugar de enviar la textura en el shader de fragmentos, 
 #include "PointLight.h"
 #include "SpotLight.h"
 #include "Material.h"
+
+//using namespace irrklang;
 
 const float toRadians = 3.14159265f / 180.0f;
 
@@ -132,9 +136,10 @@ int nightLights = 0;
 bool dia;
 
 //Caminante del agua (Basica)
+bool inicia_caminante = true;
 float caminante_x = 0.0;
 float caminante_z = 0.0;
-float offset_caminante = 0.5;
+float offset_caminante = 0.2;
 int num_recta = 1;
 float angulo_caminante = 0.0f;
 float limite_angulo_izq = 0.0f;
@@ -247,6 +252,7 @@ float edge_baile = 0.5;
 float color_pista_x, color_pista_y, color_pista_z;
 double start_baile, tiempo_baile;
 bool inicia_baile;
+bool inicia_musica = true;
 float pos_luz_alpha_x = -12.0f;
 float pos_luz_alpha_z = 121.0f;
 float pos_luz_beta_x = 21.0f;
@@ -755,6 +761,14 @@ int main()
 	start = std::clock();
 	//Modelado geometrico 
 	GLuint uniformColor = 0;
+
+	//Libreria de audio
+	irrklang::ISoundEngine* engine = irrklang::createIrrKlangDevice();
+	irrklang::ISoundEngine* ambiental = irrklang::createIrrKlangDevice();
+	//Sonido ambiente
+	ambiental->play2D("Media/background.ogg", true);
+	ambiental->setSoundVolume(0.3);
+
 	////Loop mientras no se cierra la ventana
 	while (!mainWindow.getShouldClose())
 	{
@@ -802,6 +816,12 @@ int main()
 
 		//Animacion basica para el caminante del agua
 		if (mainWindow.getMueveCaminante() == 1.0f) {
+
+			if (inicia_caminante) {
+				engine->play2D("Media/Duel_of_Fates.ogg");
+				inicia_caminante = false;
+			}
+
 			//Knuckles
 			knuckles_pos = glm::vec3(-116.0f, -2.0f, -6.0f);
 			if (num_recta >= 2 and num_recta <= 4) {
@@ -928,7 +948,7 @@ int main()
 				num_recta = 1;
 				limite_angulo_izq = 0.0f;
 				limite_angulo_der = 0.0f;
-				offset_caminante = 0.5f;
+				offset_caminante = 0.2f;
 				mainWindow.setMueveCaminante(0.0f);
 				knuckles_pos = glm::vec3(60.0f, 5.0f, 150.0f);
 				knuckles_x = 0.0;
@@ -940,6 +960,12 @@ int main()
 				arriba_knuckes = true;
 				offset_knuckles = 0.3;
 				offset_rota_knuckles = 2.0;
+
+				if (!inicia_caminante) {
+					engine->removeSoundSource("Media/Duel_of_Fates.ogg");
+					inicia_caminante = true;
+				}
+
 				break;
 			default:
 				break;
@@ -1114,6 +1140,7 @@ int main()
 				if (inicia_animacion_roca) {
 					start_animacion = std::clock();
 					inicia_animacion_roca = false;
+					engine->play2D("Media/wow.ogg");
 				}
 				tiempo_animacion = (std::clock() - start_animacion) / (double)CLOCKS_PER_SEC;
 				printf("Tiempo: %f\n", tiempo_animacion);
@@ -1270,12 +1297,19 @@ int main()
 
 		//Show de luces spotlight
 		if (mainWindow.getBaile() == 1.0) {
+			//if (inicia_musica) {
+			//	engine->play2D("Media/getout.ogg");
+			//	inicia_musica = false;
+			//}
+			
 			if (inicia_baile) {
 				start_baile = std::clock();
 				inicia_baile = false;
+				inicia_musica = false;
+				engine->play2D("Media/La_Chona.ogg");
 			}
 			tiempo_baile = (std::clock() - start_baile) / (double)CLOCKS_PER_SEC;
-			printf("Tiempo: %f\n", tiempo_baile);
+			//printf("Tiempo: %f\n", tiempo_baile);
 
 			if (tiempo_baile > edge_baile) {
 				for (int i = 0; i < 3; i++) {
@@ -1347,6 +1381,10 @@ int main()
 			start_baile = 0.0;
 			inicia_baile = true;
 			edge_baile = 0.5;
+			if (!inicia_musica) {
+				engine->removeSoundSource("Media/La_Chona.ogg");
+				inicia_musica = true;
+			}
 		}
 
 		//Animacion del avatar
@@ -2264,6 +2302,7 @@ int main()
 
 		mainWindow.swapBuffers();
 	}
-
+	engine->drop();
+	ambiental->drop();
 	return 0;
 }
