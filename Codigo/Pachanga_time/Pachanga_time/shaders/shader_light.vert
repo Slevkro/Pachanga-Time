@@ -12,6 +12,7 @@ out vec3 FragPos;
 uniform mat4 model;
 uniform mat4 projection;
 uniform mat4 view;
+uniform vec3 color;
 
 void main()
 {

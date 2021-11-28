@@ -30,6 +30,7 @@ public:
 	GLuint GetSpecularIntensityLocation();
 	GLuint GetShininessLocation();
 	GLuint GetEyePositionLocation();
+	GLuint GetColorLocation();
 
 	void SetDirectionalLight(DirectionalLight * dLight);
 	void SetPointLights(PointLight * pLight, unsigned int lightCount);
@@ -44,7 +45,7 @@ private:
 	int pointLightCount;
 	int spotLightCount;
 	GLuint shaderID, uniformProjection, uniformModel, uniformView, uniformEyePosition,
-		uniformSpecularIntensity, uniformShininess;
+		uniformSpecularIntensity, uniformShininess, uniformColor;
 
 	struct {
 		GLuint uniformcolor;

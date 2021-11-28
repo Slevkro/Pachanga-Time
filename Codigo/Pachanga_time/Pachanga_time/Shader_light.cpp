@@ -8,6 +8,7 @@ Shader::Shader()
 
 	pointLightCount = 0;
 	spotLightCount = 0;
+	uniformColor = 0;
 }
 
 void Shader::CreateFromString(const char* vertexCode, const char* fragmentCode)
@@ -83,6 +84,7 @@ void Shader::CompileShader(const char* vertexCode, const char* fragmentCode)
 	uniformProjection = glGetUniformLocation(shaderID, "projection");
 	uniformModel = glGetUniformLocation(shaderID, "model");
 	uniformView = glGetUniformLocation(shaderID, "view");
+	uniformColor = glGetUniformLocation(shaderID, "color");
 	uniformDirectionalLight.uniformcolor = glGetUniformLocation(shaderID, "directionalLight.base.color");
 	uniformDirectionalLight.uniformAmbientIntensity = glGetUniformLocation(shaderID, "directionalLight.base.ambientIntensity");
 	uniformDirectionalLight.uniformDirection = glGetUniformLocation(shaderID, "directionalLight.direction");
@@ -194,6 +196,11 @@ GLuint Shader::GetShininessLocation()
 GLuint Shader::GetEyePositionLocation()
 {
 	return uniformEyePosition;
+}
+
+GLuint Shader::GetColorLocation()
+{
+	return uniformColor;
 }
 
 void Shader::SetDirectionalLight(DirectionalLight * dLight)
