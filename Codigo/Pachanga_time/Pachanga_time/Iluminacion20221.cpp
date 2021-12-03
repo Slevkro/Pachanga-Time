@@ -54,13 +54,11 @@ std::vector<Shader> shaderList;
 
 Camera camera;
 
-Texture brickTexture;
-Texture dirtTexture;
-Texture plainTexture;
-Texture dadoTexture;
 Texture pisoTexture;
-Texture Tagave;
-
+Texture picos_piniata1;
+Texture picos_piniata2;
+Texture cuerpo_piniata;
+Texture mesas;
 
 Model Terreno_Base;
 Model Among_Us;
@@ -80,6 +78,7 @@ Model Shuba;
 Model Piedra;
 Model PiedraNieve;
 Model Nubes;
+Model Pan;
 
 //Jerarquia del avatar
 Model FinnCuerpo;
@@ -381,79 +380,6 @@ void CreateObjects()
 
 }
 
-//void CrearCubo()
-//{
-//	unsigned int cubo_indices[] = {
-//		// front
-//		0, 1, 2,
-//		2, 3, 0,
-//		// right
-//		4, 5, 6,
-//		6, 7, 4,
-//		// back
-//		8, 9, 10,
-//		10, 11, 8,
-//
-//		// left
-//		12, 13, 14,
-//		14, 15, 12,
-//		// bottom
-//		16, 17, 18,
-//		18, 19, 16,
-//		// top
-//		20, 21, 22,
-//		22, 23, 20,
-//	};
-//
-//
-//	GLfloat cubo_vertices[] = {
-//		// front
-//		//x		y		z		S		T			NX		NY		NZ
-//		-0.5f, -0.5f,  0.5f,	0.27f,  0.35f,		0.0f,	0.0f,	-1.0f,	//0
-//		0.5f, -0.5f,  0.5f,		0.48f,	0.35f,		0.0f,	0.0f,	-1.0f,	//1
-//		0.5f,  0.5f,  0.5f,		0.48f,	0.64f,		0.0f,	0.0f,	-1.0f,	//2
-//		-0.5f,  0.5f,  0.5f,	0.27f,	0.64f,		0.0f,	0.0f,	-1.0f,	//3
-//		// right
-//		//x		y		z		S		T
-//		0.5f, -0.5f,  0.5f,	    0.52f,  0.35f,		-1.0f,	0.0f,	0.0f,
-//		0.5f, -0.5f,  -0.5f,	0.73f,	0.35f,		-1.0f,	0.0f,	0.0f,
-//		0.5f,  0.5f,  -0.5f,	0.73f,	0.64f,		-1.0f,	0.0f,	0.0f,
-//		0.5f,  0.5f,  0.5f,	    0.52f,	0.64f,		-1.0f,	0.0f,	0.0f,
-//		// back
-//		-0.5f, -0.5f, -0.5f,	0.77f,	0.35f,		0.0f,	0.0f,	1.0f,
-//		0.5f, -0.5f, -0.5f,		0.98f,	0.35f,		0.0f,	0.0f,	1.0f,
-//		0.5f,  0.5f, -0.5f,		0.98f,	0.64f,		0.0f,	0.0f,	1.0f,
-//		-0.5f,  0.5f, -0.5f,	0.77f,	0.64f,		0.0f,	0.0f,	1.0f,
-//
-//		// left
-//		//x		y		z		S		T
-//		-0.5f, -0.5f,  -0.5f,	0.0f,	0.35f,		1.0f,	0.0f,	0.0f,
-//		-0.5f, -0.5f,  0.5f,	0.23f,  0.35f,		1.0f,	0.0f,	0.0f,
-//		-0.5f,  0.5f,  0.5f,	0.23f,	0.64f,		1.0f,	0.0f,	0.0f,
-//		-0.5f,  0.5f,  -0.5f,	0.0f,	0.64f,		1.0f,	0.0f,	0.0f,
-//
-//		// bottom
-//		//x		y		z		S		T
-//		-0.5f, -0.5f,  0.5f,	0.27f,	0.02f,		0.0f,	1.0f,	0.0f,
-//		0.5f,  -0.5f,  0.5f,	0.48f,  0.02f,		0.0f,	1.0f,	0.0f,
-//		 0.5f,  -0.5f,  -0.5f,	0.48f,	0.31f,		0.0f,	1.0f,	0.0f,
-//		-0.5f, -0.5f,  -0.5f,	0.27f,	0.31f,		0.0f,	1.0f,	0.0f,
-//
-//		//UP
-//		 //x		y		z		S		T
-//		 -0.5f, 0.5f,  0.5f,	0.27f,	0.68f,		0.0f,	-1.0f,	0.0f,
-//		 0.5f,  0.5f,  0.5f,	0.48f,  0.68f,		0.0f,	-1.0f,	0.0f,
-//		  0.5f, 0.5f,  -0.5f,	0.48f,	0.98f,		0.0f,	-1.0f,	0.0f,
-//		 -0.5f, 0.5f,  -0.5f,	0.27f,	0.98f,		0.0f,	-1.0f,	0.0f,
-//
-//	};
-//
-//	Mesh *cubo = new Mesh();
-//	cubo->CreateMesh(cubo_vertices, cubo_indices, 192, 36);
-//	meshList.push_back(cubo);
-//
-//}
-
 void CrearCubo()
 {
 	unsigned int cubo_indices[] = {
@@ -461,37 +387,101 @@ void CrearCubo()
 		0, 1, 2,
 		2, 3, 0,
 		// right
-		1, 5, 6,
-		6, 2, 1,
+		4, 5, 6,
+		6, 7, 4,
 		// back
-		7, 6, 5,
-		5, 4, 7,
+		9, 8, 11,
+		11, 10, 9,
 		// left
-		4, 0, 3,
-		3, 7, 4,
+		12, 13, 14,
+		14, 15, 12,
 		// bottom
-		4, 5, 1,
-		1, 0, 4,
+		19, 18, 17,
+		17, 16, 19,
 		// top
-		3, 2, 6,
-		6, 7, 3
+		21, 20, 23,
+		23, 22, 21
 	};
 
 	GLfloat cubo_vertices[] = {
 		// front
-		-0.5f, -0.5f,  0.5f,
-		0.5f, -0.5f,  0.5f,
-		0.5f,  0.5f,  0.5f,
-		-0.5f,  0.5f,  0.5f,
+		//x		y		z		u		v
+		-0.5f, -0.5f,  0.5f,	0.01f,	0.01f,//0
+		0.5f, -0.5f,  0.5f,		0.25f,	0.01f,//1
+		0.5f,  0.5f,  0.5f,		0.25f,	0.33f,//2
+		-0.5f,  0.5f,  0.5f,	0.01f,	0.33f,//3
+		// right 
+		0.5f, -0.5f,  0.5f,		0.0f,	0.34f,//4.
+		0.5f, -0.5f, -0.5f,		0.25f,	0.34f,//5.
+		0.5f, 0.5f,  -0.5f,		0.25f,	0.66f,//6
+		0.5f, 0.5f,  0.5f,		0.0f,	0.66f,//7
 		// back
-		-0.5f, -0.5f, -0.5f,
-		0.5f, -0.5f, -0.5f,
-		0.5f,  0.5f, -0.5f,
-		-0.5f,  0.5f, -0.5f
+		-0.5f, -0.5f, -0.5f,	0.5f,	0.34f,//8
+		0.5f, -0.5f, -0.5f,		0.25f,	0.34f,//9
+		0.5f,  0.5f, -0.5f,		0.25f,	0.66f,//10
+		-0.5f,  0.5f, -0.5f,	0.5f,	0.66f,//11
+		// left
+		-0.5f, -0.5f,  0.5f,	0.75f,	0.34f,//12
+		-0.5f, -0.5f, -0.5f,	0.505f,	0.34f,//13
+		-0.5f,  0.5f, -0.5f,	0.505f,	0.665f,//14 
+		-0.5f,  0.5f,  0.5f,	0.75f,	0.665f,//15
+		//bottom
+		-0.5f, -0.5f,  0.5f,	0.505f,	1.0f,//16
+		0.5f, -0.5f,  0.5f,		0.747f,	1.0f,//17
+		0.5f,  -0.5f, -0.5f,	0.747f,	0.67f,//18
+		-0.5f,  -0.5f, -0.5f,	0.505f,	0.67f,//19
+		//top
+		0.5f,  0.5f,  0.5f,		1.0f,	0.34f,//20
+		-0.5f,  0.5f, 0.5f,		0.76f,	0.34f,//21
+		-0.5f,  0.5f, -0.5f,	0.76f,	0.67f,//22
+		0.5f,  0.5f,  -0.5f,	1.0f,	0.67f,//23
+
+
 	};
-	Mesh* cubo = new Mesh();
-	cubo->CreateMeshGeo(cubo_vertices, cubo_indices, 24, 36);
-	meshList.push_back(cubo);
+	MeshGeo* cubo = new MeshGeo();
+	cubo->CreateMesh(cubo_vertices, cubo_indices, 120, 36);
+	meshListGeo.push_back(cubo);
+
+}
+
+void CrearPiramide()
+{
+	unsigned int piramide_indices[] = {
+		//TOP
+		// front
+		0, 1, 2,
+		// right
+		3, 4, 5,
+		// back
+		6, 7, 8,
+		// left
+		9, 10, 11
+	};
+
+	GLfloat piramide_vertices[] = {
+		//x		y		z		u		v
+		//BOTTOM
+
+		// front [6]
+		0.5f, 0.0f,  0.5f,		0.375f,	0.2f,//12
+		-0.5f, 0.0f,  0.5f,		0.25f,	0.4f,//13
+		0.0f,  -0.87f,  0.0f,	0.125f,	0.2f,//14
+		// right [4]
+		0.5f, 0.0f,  -0.5f,		0.625f,	0.21f,//15
+		0.5f, 0.0f,  0.5f,		0.51f,	0.395,//16
+		0.0f,  -0.87f,  0.0f,	0.74f,	0.39f,//17
+		// back [8]
+		0.5f, 0.0f,  -0.5f,		0.375f,	0.6f,//18
+		-0.5f, 0.0f,  -0.5f,	0.125f,	0.6f,//19  
+		0.0f,  -0.87f,  0.0f,	0.25f,	0.8f,//20
+		// left [2]
+		-0.5f, 0.0f,  -0.5f,	0.5f,	0.41f,//21
+		-0.5f, 0.0f,  0.5f,		0.39f,	0.59f,//22
+		0.0f,  -0.87f,  0.0f,	0.62f,	0.6f//23
+	};
+	MeshGeo* piramide = new MeshGeo();
+	piramide->CreateMesh(piramide_vertices, piramide_indices, 60, 12);
+	meshListGeo.push_back(piramide);
 
 }
 
@@ -515,7 +505,9 @@ int main()
 
 	CreateObjects();
 	CrearCubo();
+	CrearPiramide();
 	CreateShaders();
+
 
 	camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 1.0f, 0.5f);
 
@@ -530,8 +522,16 @@ int main()
 	//plainTexture.LoadTextureA();
 	//dadoTexture = Texture("Textures/dado.tga");
 	//dadoTexture.LoadTextureA();
-	pisoTexture = Texture("Textures/piso.tga");
+	pisoTexture = Texture("Textures/shuba-yellow.tga");
 	pisoTexture.LoadTextureA();
+	mesas = Texture("Textures/base-cafe-arbol.tga");
+	mesas.LoadTextureA();
+	cuerpo_piniata = Texture("Textures/piniata.tga");
+	cuerpo_piniata.LoadTextureA();
+	picos_piniata2 = Texture("Textures/lago-agua.tga");
+	picos_piniata2.LoadTextureA();
+	picos_piniata1 = Texture("Textures/base-clouds.tga");
+	picos_piniata1.LoadTextureA();
 	//Tagave = Texture("Textures/Agave.tga");
 	//Tagave.LoadTextureA();
 	//
@@ -560,6 +560,9 @@ int main()
 
 	Nubes = Model();
 	Nubes.LoadModel("Models/nice-clouds.obj");
+
+	Pan = Model();
+	Pan.LoadModel("Models/pan.obj");
 
 	//Llanta_M = Model();
 	//Llanta_M.LoadModel("Models/llanta.obj");
@@ -1479,7 +1482,7 @@ int main()
 		
 		glUniform3f(uniformEyePosition, camera.getCameraPosition().x, camera.getCameraPosition().y, camera.getCameraPosition().z);
 
-		//printf("x: %f, y: %f, z: %f \n", camera.getCameraPosition().x, camera.getCameraPosition().y, camera.getCameraPosition().z);
+		printf("x: %f, y: %f, z: %f \n", camera.getCameraPosition().x, camera.getCameraPosition().y, camera.getCameraPosition().z);
 
 		//luz ligada a la cámara de tipo flash 
 		//glm::vec3 lowerLight = camera.getCameraPosition();
@@ -1515,7 +1518,8 @@ int main()
 
 		glm::mat4 model(1.0);
 		glm::mat4 model_centro_auto(1.0);
-		glm::mat4 model_chopper(1.0);
+		glm::mat4 model_aux_postes(1.0);
+		glm::mat4 model_piniata(1.0);
 
 
 		//model = glm::mat4(1.0);
@@ -1530,7 +1534,8 @@ int main()
 		//agregar su coche y ponerle material
 		model = glm::mat4(1.0);
 		model_centro_auto = glm::mat4(1.0);
-		model_chopper = glm::mat4(1.0);
+		model_aux_postes = glm::mat4(1.0);
+		model_piniata = glm::mat4(1.0);
 
 		//Terreno Base
 		model = glm::translate(model, glm::vec3(0.0f,  0.5f , -1.5f));
@@ -1662,6 +1667,22 @@ int main()
 		model = glm::rotate(model, 120 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		Bang_Girl.RenderModel();
+
+		//Pan 1
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(62.0f, -13.0f, -118.0f));
+		model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
+		//model = glm::rotate(model, 120 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pan.RenderModel();
+
+		//Pan 2
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(0.0f, -13.0f, -158.0f));
+		model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
+		//model = glm::rotate(model, 120 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		Pan.RenderModel();
 
 		//Hombres de nieve //Bernie
 		model = glm::mat4(1.0);
@@ -2175,7 +2196,7 @@ int main()
 		PiedraNieve.RenderModel();
 
 		//--------------------------------
-		//Modelado geometrico
+		//MODELADO GEOMETRICO
 		model = glm::mat4(1.0f);
 		model = glm::translate(model, glm::vec3(-102.0f, -97.0f, 375.0f));
 		model = glm::scale(model, glm::vec3(18.0f, 10.0f, 40.0f));
@@ -2282,20 +2303,231 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		sp.render(); //Renderiza esfera
 
-		//Modelado geometrico 
+		//Mesa 1
 
-		////CUBO DE PRUEBA
-		//color = glm::vec3(1.0, 0.0f, 0.0f);	
-		//model = glm::translate(model, glm::vec3(0.0f, 30.0f, 0.0f));
-		////matrizpalma = matrizauxiliar = model;
-		//model = glm::scale(model, glm::vec3(20.0f, 20.0f, 20.0f));
-		//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));//FALSE ES PARA QUE NO SEA TRANSPUESTA
-		//glUniformMatrix4fv(uniformProjection, 1, GL_FALSE, glm::value_ptr(projection));
-		//glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		//meshList[0]->RenderMesh();
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(72.0f, 12.0f, -133.0f));
+		model = glm::scale(model, glm::vec3(3.5f, 12.0f, 3.5f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		mesas.UseTexture();
+		meshListGeo[0]->RenderMesh();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(52.0f, 12.0f, -133.0f));
+		model = glm::scale(model, glm::vec3(3.5f, 12.0f, 3.5f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		mesas.UseTexture();
+		meshListGeo[0]->RenderMesh();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(72.0f, 12.0f, -103.0f));
+		model = glm::scale(model, glm::vec3(3.5f, 12.0f, 3.5f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		mesas.UseTexture();
+		meshListGeo[0]->RenderMesh();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(52.0f, 12.0f, -103.0f));
+		model = glm::scale(model, glm::vec3(3.5f, 12.0f, 3.5f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		mesas.UseTexture();
+		meshListGeo[0]->RenderMesh();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(62.0f, 18.0f, -118.0f));
+		model = glm::scale(model, glm::vec3(22.0f, 1.0f, 32.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		mesas.UseTexture();
+		meshListGeo[0]->RenderMesh();
+
+		//-----------------------------------------
+		//Mesa 2
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(12.0f, 12.0f, -173.0f));
+		model = glm::scale(model, glm::vec3(3.5f, 12.0f, 3.5f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		mesas.UseTexture();
+		meshListGeo[0]->RenderMesh();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-12.0f, 12.0f, -173.0f));
+		model = glm::scale(model, glm::vec3(3.5f, 12.0f, 3.5f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		mesas.UseTexture();
+		meshListGeo[0]->RenderMesh();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(12.0f, 12.0f, -143.0f));
+		model = glm::scale(model, glm::vec3(3.5f, 12.0f, 3.5f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		mesas.UseTexture();
+		meshListGeo[0]->RenderMesh();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-12.0f, 12.0f, -143.0f));
+		model = glm::scale(model, glm::vec3(3.5f, 12.0f, 3.5f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		mesas.UseTexture();
+		meshListGeo[0]->RenderMesh();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(0.0f, 18.0f, -158.0f));
+		model = glm::scale(model, glm::vec3(24.0f, 1.0f, 34.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		mesas.UseTexture();
+		meshListGeo[0]->RenderMesh();
 
 		//-----------------------------------------------------
-		////Modelado Jerarquico
+		//MODELADO JERARQUICO
+
+		//Postes
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-15.0f, 42.0f, -53.0f));
+		model = glm::rotate(model, 25 * toRadians, glm::vec3(0.0f, -1.0f, 0.0f));
+		model_aux_postes = model;
+		model = glm::scale(model, glm::vec3(4.5f, 75.0f, 4.5f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		mesas.UseTexture();
+		meshListGeo[0]->RenderMesh();
+
+		model = model_aux_postes;
+		model = glm::translate(model, glm::vec3(-2.25f - 7.5f, 37.5f, -0.0f));
+		model_aux_postes = model;
+		model = glm::scale(model, glm::vec3(15.0f, 22.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		pisoTexture.UseTexture();
+		meshListGeo[1]->RenderMesh();
+
+		model = model_aux_postes;
+		model = glm::translate(model, glm::vec3(-15.0f, 0.0f, -0.0f));
+		model_aux_postes = model;
+		model = glm::scale(model, glm::vec3(15.0f, 22.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		mesas.UseTexture();
+		meshListGeo[1]->RenderMesh();
+
+		model = model_aux_postes;
+		model = glm::translate(model, glm::vec3(-15.0f, 0.0f, -0.0f));
+		model_aux_postes = model;
+		model = glm::scale(model, glm::vec3(15.0f, 22.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		picos_piniata2.UseTexture();
+		meshListGeo[1]->RenderMesh();
+
+		model = model_aux_postes;
+		model = glm::translate(model, glm::vec3(-15.0f, 0.0f, -0.0f));
+		model_aux_postes = model;
+		model = glm::scale(model, glm::vec3(15.0f, 22.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		mesas.UseTexture();
+		meshListGeo[1]->RenderMesh();
+
+		model = model_aux_postes;
+		model = glm::translate(model, glm::vec3(-15.0f, 0.0f, -0.0f));
+		model_aux_postes = model;
+		model = glm::scale(model, glm::vec3(15.0f, 22.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		picos_piniata2.UseTexture();
+		meshListGeo[1]->RenderMesh();
+
+		model = model_aux_postes;
+		model = glm::translate(model, glm::vec3(-15.0f, 0.0f, -0.0f));
+		model_aux_postes = model;
+		model = glm::scale(model, glm::vec3(15.0f, 22.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		pisoTexture.UseTexture();
+		meshListGeo[1]->RenderMesh();
+
+		model = model_aux_postes;
+		model = glm::translate(model, glm::vec3(-15.0f, 0.0f, -0.0f));
+		model_aux_postes = model;
+		model = glm::scale(model, glm::vec3(15.0f, 22.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		picos_piniata2.UseTexture();
+		meshListGeo[1]->RenderMesh();
+
+		model = model_aux_postes;
+		model = glm::translate(model, glm::vec3(-7.5f - 2.25f, -37.5f, 0.0f));
+		model_aux_postes = model;
+		model = glm::scale(model, glm::vec3(4.5f, 75.0f, 4.5f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		mesas.UseTexture();
+		meshListGeo[0]->RenderMesh();
+
+		//Piñata
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(137.0f, -10.0f, 362.0f));
+		model = glm::rotate(model, -15 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, -10 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::scale(model, glm::vec3(260.0f, 2.5f, 2.5f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		pisoTexture.UseTexture();
+		meshListGeo[0]->RenderMesh();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(137.0f, -10.0f, 362.0f));
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		cuerpo_piniata.UseTexture();
+		meshListGeo[0]->RenderMesh();
+
+		model = glm::mat4(1.0f);
+		model = glm::translate(model, glm::vec3(157.0f, -40.0f, 362.0f));
+		model = glm::rotate(model, 45 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, 10 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		model_aux_postes = model;
+		model = glm::scale(model, glm::vec3(12.0f, 12.0f, 12.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));//FALSE ES PARA QUE NO SEA TRANSPUESTA
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		sp.render(); //Renderiza esfera
+
+		model = model_aux_postes;
+		model = glm::translate(model, glm::vec3(0.0f , -8.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(10.0f, 18.0f, 10.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		mesas.UseTexture();
+		meshListGeo[1]->RenderMesh();
+
+		model = model_aux_postes;
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -8.0f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(10.0f, 18.0f, 10.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		pisoTexture.UseTexture();
+		meshListGeo[1]->RenderMesh();
+
+		model = model_aux_postes;
+		model = glm::translate(model, glm::vec3(0.0f, 8.0f, 0.0f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(10.0f, 18.0f, 10.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		mesas.UseTexture();
+		meshListGeo[1]->RenderMesh();
+
+		model = model_aux_postes;
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 8.0f));
+		model = glm::rotate(model, 270 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(10.0f, 18.0f, 10.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		pisoTexture.UseTexture();
+		meshListGeo[1]->RenderMesh();
+
+		model = model_aux_postes;
+		model = glm::translate(model, glm::vec3(8.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::scale(model, glm::vec3(10.0f, 18.0f, 10.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		picos_piniata2.UseTexture();
+		meshListGeo[1]->RenderMesh();
+
+		model = model_aux_postes;
+		model = glm::translate(model, glm::vec3(-8.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, 270 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::scale(model, glm::vec3(10.0f, 18.0f, 10.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		picos_piniata2.UseTexture();
+		meshListGeo[1]->RenderMesh();
 
 
 		glUseProgram(0);
